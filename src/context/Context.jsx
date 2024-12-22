@@ -54,6 +54,22 @@ const ServiceContextProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  //theme change
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
   //get Current User
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -93,6 +109,8 @@ const ServiceContextProvider = ({ children }) => {
         updateUser,
         user,
         services,
+        toggleTheme,
+        theme,
       }}
     >
       {children}

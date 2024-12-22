@@ -14,7 +14,7 @@ import { useServiceContext } from "../../context/Context";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const { user, signOutUser } = useServiceContext();
+  const { user, signOutUser, toggleTheme, theme } = useServiceContext();
 
   const handleSignout = () => {
     signOutUser();
@@ -54,6 +54,12 @@ const Navbar = () => {
           >
             {isMenuOpen ? <FiX /> : <FiMenu />}
           </button>
+          <button
+            onClick={toggleTheme}
+            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+          >
+            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+          </button>
         </div>
 
         {/* Full Menu (Hidden on Small Screens) */}
@@ -78,7 +84,6 @@ const Navbar = () => {
             <span>Services</span>
           </Link>
 
-          {/* Conditional Rendering for Logged-in and Non-Logged-in Users */}
           {user ? (
             <>
               {/* Dashboard Dropdown */}
@@ -91,28 +96,28 @@ const Navbar = () => {
                   <FiChevronDown />
                 </button>
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10">
+                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 ">
                     <Link
                       to="/add-service"
-                      className="block px-4 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       Add Service
                     </Link>
                     <Link
                       to="/manage-services"
-                      className="block px-4 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       Manage Service
                     </Link>
                     <Link
                       to="/booked-services"
-                      className="block px-4 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       Booked Services
                     </Link>
                     <Link
                       to="/service-to-do"
-                      className="block px-4 py-2 hover:bg-gray-100"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
                       Service To-Do
                     </Link>
@@ -130,18 +135,24 @@ const Navbar = () => {
                 <span>{user?.displayName || "User"}</span>
                 <button
                   onClick={handleSignout}
-                  className="flex items-center space-x-1 hover:text-gray-300"
+                  className="flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
                 >
                   <FiLogOut />
                   <span>Logout</span>
                 </button>
               </div>
+              <button
+                onClick={toggleTheme}
+                className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+              >
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
+              </button>
             </>
           ) : (
             // Non-Logged-in Menu
             <NavLink
               to="/auth/login"
-              className="flex items-center space-x-1 hover:text-gray-300"
+              className="flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
             >
               <FiLogIn />
               <span>Log-in</span>
@@ -200,7 +211,7 @@ const Navbar = () => {
                 <div className="flex items-center space-x-2 mt-4">
                   <button
                     onClick={handleSignout}
-                    className="flex items-center space-x-1 hover:text-gray-300"
+                    className="flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
                   >
                     <FiLogOut />
                     <span>Logout</span>
@@ -208,7 +219,10 @@ const Navbar = () => {
                 </div>
               </>
             ) : (
-              <NavLink to="/auth/login" className="block hover:text-gray-300">
+              <NavLink
+                to="/auth/login"
+                className="block hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
+              >
                 Log-in
               </NavLink>
             )}

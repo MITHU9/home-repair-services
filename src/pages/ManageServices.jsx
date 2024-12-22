@@ -34,7 +34,7 @@ const ManageServices = () => {
   }
 
   return (
-    <div>
+    <div className="pb-12">
       <Helmet>
         <title>ManageServices || Home Repair</title>
       </Helmet>
@@ -61,7 +61,7 @@ const ManageServices = () => {
           services.map((service) => (
             <div
               key={service._id}
-              className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
+              className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between dark:bg-gray-700"
               data-aos="fade-up"
             >
               <img
@@ -69,13 +69,13 @@ const ManageServices = () => {
                 alt={service.serviceName}
                 className="w-full h-40 lg:h-52 object-cover rounded-lg mb-4"
               />
-              <h2 className="text-xl font-bold text-gray-800 mb-2">
+              <h2 className="text-xl font-bold text-gray-800 mb-2 dark:text-gray-200">
                 {service.serviceName}
               </h2>
-              <p className="text-gray-600 text-sm mb-2">
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
                 {service.description}
               </p>
-              <p className="text-lg font-semibold text-gray-800 mb-2">
+              <p className="text-lg font-semibold text-gray-800 mb-2 dark:text-gray-200">
                 ServiceCharge: ${service.price}
               </p>
               <div className="flex justify-between items-center">
@@ -95,7 +95,14 @@ const ManageServices = () => {
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-600">No services found.</p>
+          <div className="flex flex-col items-center justify-center h-[60vh] text-gray-500 text-lg mt-10">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mt-8">
+              No services found.
+            </h2>
+            <p className="text-center font-semibold text-gray-600">
+              It looks like you haven`t added any services yet.
+            </p>
+          </div>
         )}
       </div>
     </div>

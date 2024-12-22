@@ -5,6 +5,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { useServiceContext } from "../context/Context";
 import { useLoaderData } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import BookingForm from "../components/form/BookingForm";
 
 const ServiceDetails = () => {
   const { user } = useServiceContext();
@@ -66,7 +67,7 @@ const ServiceDetails = () => {
       </Helmet>
       {/* Service Details Section */}
       <div
-        className="container mx-auto px-4 py-12 border shadow-md m-3 rounded-md"
+        className="container mx-auto px-4 py-12 border shadow-md m-3 rounded-md border-gray-400"
         data-aos="fade-up"
       >
         {service ? (
@@ -80,11 +81,11 @@ const ServiceDetails = () => {
                 className="w-16 h-16 rounded-full mr-4"
               />
               <div>
-                <p className="text-xl font-semibold text-gray-800">
+                <p className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                   {service.providerName}
                 </p>
-                <p className="text-sm text-gray-500 flex items-center">
-                  <FaMapMarkerAlt className="text-red-500 mr-2" />{" "}
+                <p className="text-sm text-gray-500 flex items-center dark:text-gray-300">
+                  <FaMapMarkerAlt className="text-red-500 mr-2 dark:text-gray-200" />{" "}
                   {service.serviceArea}
                 </p>
               </div>
@@ -99,15 +100,17 @@ const ServiceDetails = () => {
             />
 
             {/* Service Name */}
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+            <h1 className="text-3xl dark:text-gray-200 font-bold text-gray-800 mb-4">
               {service.serviceName}
             </h1>
 
             {/* Service Description */}
-            <p className="text-gray-600 text-sm mb-4">{service.description}</p>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+              {service.description}
+            </p>
 
             {/* Service Price */}
-            <p className="text-lg font-semibold text-gray-800 mb-4">
+            <p className="text-lg font-semibold text-gray-800 mb-4 dark:text-gray-200 ">
               Price: ${service.price}
             </p>
 
@@ -119,7 +122,7 @@ const ServiceDetails = () => {
                   className="w-12 h-12 rounded-full mr-4"
                 />
                 <div>
-                  <p className="text-xl font-semibold text-gray-800">
+                  <p className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                     {service.providerName}
                   </p>
                 </div>
@@ -141,154 +144,12 @@ const ServiceDetails = () => {
 
       {/* Modal for Booking Form */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-8 max-w-3xl w-full">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-gray-800">
-                Book Service
-              </h2>
-              <button
-                onClick={() => setShowModal(false)}
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <span className="font-bold text-2xl">&times;</span>
-              </button>
-            </div>
-
-            <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Service ID, Service Name, and other non-editable fields */}
-                <div className="mb-4">
-                  <label className="block text-gray-700">Service ID</label>
-                  <input
-                    type="text"
-                    name="serviceId"
-                    value={formData.serviceId}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">Service Name</label>
-                  <input
-                    type="text"
-                    name="serviceName"
-                    value={formData.serviceName}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">Service Image</label>
-                  <input
-                    type="text"
-                    name="serviceImage"
-                    value={formData.serviceImage}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">Provider Email</label>
-                  <input
-                    type="text"
-                    name="providerEmail"
-                    value={formData.providerEmail}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">Provider Name</label>
-                  <input
-                    type="text"
-                    name="providerName"
-                    value={formData.providerName}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">
-                    Current User Email
-                  </label>
-                  <input
-                    type="text"
-                    name="userEmail"
-                    value={formData.userEmail}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">
-                    Current User Name
-                  </label>
-                  <input
-                    type="text"
-                    name="userName"
-                    value={formData.userName}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">
-                    Service Taking Date
-                  </label>
-                  <input
-                    type="date"
-                    name="serviceDate"
-                    value={formData.serviceDate}
-                    onChange={handleChange}
-                    className="w-full p-3 mt-2 border rounded-lg"
-                  />
-                </div>
-
-                <div className="mb-4 col-span-2">
-                  <label className="block text-gray-700">
-                    Special Instructions
-                  </label>
-                  <textarea
-                    name="specialInstructions"
-                    value={formData.specialInstructions}
-                    onChange={handleChange}
-                    className="w-full p-3 mt-2 border rounded-lg"
-                    placeholder="Anything like address, area, customized service plan..."
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <label className="block text-gray-700">Price</label>
-                  <input
-                    type="text"
-                    name="price"
-                    value={formData.price}
-                    readOnly
-                    className="w-full p-3 mt-2 border rounded-lg bg-gray-100 outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Purchase Button */}
-              <div className="mt-6">
-                <button
-                  type="submit"
-                  className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700"
-                >
-                  Purchase
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <BookingForm
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          setShowModal={setShowModal}
+        />
       )}
     </div>
   );

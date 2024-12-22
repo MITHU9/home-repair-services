@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useServiceContext } from "../../context/Context";
 
 const services = [
   {
@@ -44,12 +45,18 @@ const services = [
 ];
 
 const ServiceCard = ({ service }) => {
+  const { theme } = useServiceContext();
+
+  console.log(theme);
+
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Service Cards */}
 
       <div
-        className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-transform duration-300"
+        className={`
+            ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-300"}
+            shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-transform duration-300`}
         data-aos="fade-up"
       >
         {/* Service Image */}
@@ -61,18 +68,18 @@ const ServiceCard = ({ service }) => {
 
         <div className="p-6">
           {/* Service Name */}
-          <h3 className="text-2xl font-bold text-gray-800">
+          <h3 className="text-2xl dark:text-gray-200 font-bold text-gray-800">
             {service.serviceName}
           </h3>
 
           {/* Service Description */}
-          <p className="text-gray-600 text-sm mt-2">
+          <p className="text-gray-600 dark:text-gray-300  text-sm mt-2">
             {service.description.slice(0, 100)}
             {service.description.length > 100 ? "..." : ""}
           </p>
 
           {/* Service Price */}
-          <p className="mt-4 text-lg font-semibold text-gray-800">
+          <p className="mt-4 dark:text-gray-200  text-lg font-semibold text-gray-800">
             ServiceCharge: ${service.price}
           </p>
         </div>
@@ -80,7 +87,9 @@ const ServiceCard = ({ service }) => {
         {/* Provider Info Section */}
         <div className="p-6 pt-0 border-t border-gray-200">
           {/* Provider Title */}
-          <h4 className="text-lg font-semibold text-gray-700 mb-2">Provider</h4>
+          <h4 className="text-lg dark:text-gray-200  font-semibold text-gray-700 my-2">
+            Provider:
+          </h4>
 
           {/* Provider Image and Name */}
           <div className="flex items-center">
@@ -90,7 +99,7 @@ const ServiceCard = ({ service }) => {
               className="w-10 h-10 rounded-full mr-3"
             />
             <div>
-              <p className="font-semibold text-gray-800">
+              <p className="font-semibold dark:text-gray-200  text-gray-800">
                 {service.providerName}
               </p>
             </div>

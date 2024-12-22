@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 const Home = () => {
-  const [popularServices, setPopularServices] = useState([]);
+  const [popularServices, setPopularServices, theme] = useState([]);
 
   useEffect(() => {
     AOS.init({ duration: 1000 }); // Initialize AOS with animation duration
@@ -41,8 +41,20 @@ const Home = () => {
        */}
       <section className="lg:container mx-auto px-4 py-10">
         <div className="text-center py-8">
-          <h2 className="text-gray-600 font-bold text-3xl">Popular Services</h2>
-          <p className="text-lg text-gray-500 mt-2">
+          <h2
+            className={`
+           ${
+             theme ? "dark:text-gray-200" : "light:text-gray-600"
+           } font-bold text-3xl`}
+          >
+            Popular Services
+          </h2>
+          <p
+            className={`
+           ${
+             theme ? "dark:text-gray-200" : "light:text-gray-500"
+           } font-semibold text-lg mt-2`}
+          >
             Check out some of our most popular services.
           </p>
         </div>

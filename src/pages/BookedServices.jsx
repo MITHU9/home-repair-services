@@ -25,7 +25,7 @@ const BookedServices = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 mb-12">
       <Helmet>
         <title>BookedServices || Home Repair</title>
       </Helmet>
@@ -48,7 +48,7 @@ const BookedServices = () => {
           {bookedServices.map((service, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105"
+              className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105 dark:bg-gray-800"
               data-aos="fade-up"
             >
               <img
@@ -62,7 +62,7 @@ const BookedServices = () => {
                     <h3 className="text-xl font-semibold">
                       {service.serviceName}
                     </h3>
-                    <p className="text-gray-500 font-semibold">
+                    <p className="text-gray-500 font-semibold dark:text-gray-300">
                       {service.providerName}
                     </p>
                   </div>
@@ -83,18 +83,18 @@ const BookedServices = () => {
 
                 {/* Status Section */}
                 <div className="flex justify-between items-center mt-4">
-                  <span className="text-gray-600 font-semibold">
+                  <span className="text-gray-600 font-semibold dark:text-gray-300">
                     Price: <strong>${service.price}</strong>
                   </span>
                 </div>
 
                 {/* Booking Info */}
-                <div className="mt-2 text-gray-700">
+                <div className="mt-2 text-gray-700 dark:text-gray-200">
                   <p>
                     <strong>Booked Date:</strong> {service.serviceDate}
                   </p>
                 </div>
-                <div className="mt-4 text-sm text-gray-500">
+                <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
                   <p>
                     <strong>Provider Email:</strong> {service.providerEmail}
                   </p>
