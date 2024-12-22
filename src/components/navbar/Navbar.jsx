@@ -99,7 +99,7 @@ const Navbar = () => {
                       Add Service
                     </Link>
                     <Link
-                      to="/manage-service"
+                      to="/manage-services"
                       className="block px-4 py-2 hover:bg-gray-100"
                     >
                       Manage Service

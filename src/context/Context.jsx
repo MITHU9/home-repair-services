@@ -68,6 +68,8 @@ const ServiceContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  //get updated service data from the database
+
   return (
     <ServiceContext.Provider
       value={{
