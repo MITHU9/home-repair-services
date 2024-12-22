@@ -9,11 +9,16 @@ import {
   FiMenu,
   FiX,
 } from "react-icons/fi";
+import { useServiceContext } from "../../context/Context";
 
-const Navbar = ({ userName }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const isLoggedIn = false; // Replace with your authentication stat
+  const { user, signOutUser } = useServiceContext();
+
+  const handleSignout = () => {
+    signOutUser();
+  };
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
@@ -32,12 +37,24 @@ const Navbar = ({ userName }) => {
         </div>
 
         {/* Hamburger Menu for Small Screens */}
-        <button
-          className="lg:hidden text-xl focus:outline-none"
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? <FiX /> : <FiMenu />}
-        </button>
+        <div className="flex items-center space-x-2 lg:hidden">
+          {user && (
+            <div className="flex items-center space-x-2">
+              <img
+                src={user?.photoURL || "/default-avatar.png"}
+                alt="User Avatar"
+                className="w-8 h-8 rounded-full"
+              />
+              <span>{user?.displayName || "User"}</span>
+            </div>
+          )}
+          <button
+            className="lg:hidden text-xl focus:outline-none"
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
 
         {/* Full Menu (Hidden on Small Screens) */}
         <div
@@ -62,7 +79,7 @@ const Navbar = ({ userName }) => {
           </Link>
 
           {/* Conditional Rendering for Logged-in and Non-Logged-in Users */}
-          {isLoggedIn ? (
+          {user ? (
             <>
               {/* Dashboard Dropdown */}
               <div className="relative">
@@ -105,13 +122,16 @@ const Navbar = ({ userName }) => {
 
               {/* User Profile and Logout */}
               <div className="flex items-center space-x-2">
-                {/* <img
-                  src={userImage || "/default-avatar.png"} // Replace with default avatar if none
+                <img
+                  src={user?.photoURL || "/default-avatar.png"}
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full"
-                /> */}
-                <span>{userName || "User"}</span>
-                <button className="flex items-center space-x-1 hover:text-gray-300">
+                />
+                <span>{user?.displayName || "User"}</span>
+                <button
+                  onClick={handleSignout}
+                  className="flex items-center space-x-1 hover:text-gray-300"
+                >
                   <FiLogOut />
                   <span>Logout</span>
                 </button>
@@ -140,7 +160,7 @@ const Navbar = ({ userName }) => {
             <Link to="/services" className="block hover:text-gray-300">
               Services
             </Link>
-            {isLoggedIn ? (
+            {user ? (
               <>
                 <button
                   onClick={toggleDropdown}
@@ -178,13 +198,10 @@ const Navbar = ({ userName }) => {
                   </div>
                 )}
                 <div className="flex items-center space-x-2 mt-4">
-                  {/* <img
-                    src={userImage || "/default-avatar.png"}
-                    alt="User Avatar"
-                    className="w-8 h-8 rounded-full"
-                  /> */}
-                  <span>{userName || "User"}</span>
-                  <button className="flex items-center space-x-1 hover:text-gray-300">
+                  <button
+                    onClick={handleSignout}
+                    className="flex items-center space-x-1 hover:text-gray-300"
+                  >
                     <FiLogOut />
                     <span>Logout</span>
                   </button>
