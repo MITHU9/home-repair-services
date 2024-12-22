@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { useServiceContext } from "../context/Context";
 import { useLoaderData } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ServiceDetails = () => {
   const { user } = useServiceContext();
@@ -60,6 +61,9 @@ const ServiceDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>ServiceDetails || Home Repair</title>
+      </Helmet>
       {/* Service Details Section */}
       <div
         className="container mx-auto px-4 py-12 border shadow-md m-3 rounded-md"

@@ -12,6 +12,7 @@ import {
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useServiceContext } from "../context/Context";
 import { FcGoogle } from "react-icons/fc";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { user } = useServiceContext();
@@ -112,6 +113,9 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <Helmet>
+        <title>Register || Home Repair</title>
+      </Helmet>
       <div
         className="bg-white shadow-xl rounded-lg p-6 sm:p-8 lg:p-10 w-full max-w-sm sm:max-w-md lg:max-w-lg"
         data-aos="fade-up"

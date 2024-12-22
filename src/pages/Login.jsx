@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useServiceContext } from "../context/Context";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { user } = useServiceContext();
@@ -90,6 +91,9 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <Helmet>
+        <title>Login || Home Repair</title>
+      </Helmet>
       <div
         className="bg-white shadow-xl rounded-lg p-6 sm:p-8 lg:p-10 w-full max-w-sm sm:max-w-md lg:max-w-lg"
         data-aos="fade-up"

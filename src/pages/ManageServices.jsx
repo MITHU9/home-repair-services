@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useServiceContext } from "../context/Context";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
@@ -34,6 +35,9 @@ const ManageServices = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>ManageServices || Home Repair</title>
+      </Helmet>
       {/* Banner */}
       <div
         className="bg-gradient-to-r from-green-600 via-transparent/50 to-gray-500 text-white text-center py-12 relative"

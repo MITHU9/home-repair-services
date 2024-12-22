@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import ServiceCard from "../components/service-card/ServiceCard";
+import { Helmet } from "react-helmet-async";
 
 const AllServices = () => {
   const [services, setServices] = useState([]);
@@ -19,6 +20,9 @@ const AllServices = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>AllServices || Home Repair</title>
+      </Helmet>
       {/* Banner Section with Animated Text */}
       <div className="relative bg-blue-600 text-white py-24 px-4 text-center">
         <div

@@ -3,6 +3,7 @@ import Banner from "../components/banner/Banner";
 import AOS from "aos";
 import ServiceCard from "../components/service-card/ServiceCard";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const [popularServices, setPopularServices] = useState([]);
@@ -23,6 +24,14 @@ const Home = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          {location.pathname === "/"
+            ? "Home Repair"
+            : location.pathname.split("/home/")[1]}{" "}
+          || Home Repair Services
+        </title>
+      </Helmet>
       <section>
         <Banner />
       </section>
@@ -48,7 +57,7 @@ const Home = () => {
         <div className="text-center mt-8">
           <Link
             to="/all-services"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
           >
             Show All Services
           </Link>

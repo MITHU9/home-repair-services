@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 
@@ -59,6 +60,9 @@ const UpdateService = () => {
 
   return (
     <div className="bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 min-h-screen">
+      <Helmet>
+        <title>UpdateService || Home Repair</title>
+      </Helmet>
       {/* Header Section */}
       <header
         className="bg-cover bg-center bg-no-repeat h-72 flex items-center justify-center relative"

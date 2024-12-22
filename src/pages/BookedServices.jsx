@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useServiceContext } from "../context/Context";
+import { Helmet } from "react-helmet-async";
 
 const BookedServices = () => {
   const [bookedServices, setBookedServices] = useState([]);
@@ -25,6 +26,9 @@ const BookedServices = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <Helmet>
+        <title>BookedServices || Home Repair</title>
+      </Helmet>
       <h2 className="text-3xl font-bold text-center mb-8">
         Your Booked Services
       </h2>

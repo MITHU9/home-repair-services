@@ -3,6 +3,7 @@ import "aos/dist/aos.css"; // Import AOS styles
 import AOS from "aos";
 import { useServiceContext } from "../context/Context";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const AddService = () => {
   const { user } = useServiceContext();
@@ -48,6 +49,9 @@ const AddService = () => {
 
   return (
     <div className="bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 min-h-screen">
+      <Helmet>
+        <title>AddService || Home Repair</title>
+      </Helmet>
       {/* Header Section */}
       <header
         className="bg-cover bg-center bg-no-repeat h-64 flex items-center justify-center relative"
