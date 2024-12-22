@@ -9,11 +9,12 @@ import {
   FiLock,
   FiImage,
 } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useServiceContext } from "../context/Context";
 import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
+  const { user } = useServiceContext();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const {
@@ -27,7 +28,7 @@ const Register = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    AOS.init({ duration: 1000 }); // Initialize AOS with animation duration
+    AOS.init({ duration: 1000 });
   }, []);
 
   const handleGoogleSignIn = () => {
@@ -92,6 +93,10 @@ const Register = () => {
       setError("Please accept terms & conditions");
     }
   };
+
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   if (loading) {
     return (
@@ -190,6 +195,11 @@ const Register = () => {
           >
             Register
           </button>
+          {error && (
+            <div className="text-red-600">
+              <label>{error}</label>
+            </div>
+          )}
         </form>
 
         <div className="my-4">

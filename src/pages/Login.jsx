@@ -3,11 +3,12 @@ import "aos/dist/aos.css"; // Import AOS styles
 import AOS from "aos";
 import { FiMail, FiLock, FiEyeOff, FiEye } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useServiceContext } from "../context/Context";
 import axios from "axios";
 
 const Login = () => {
+  const { user } = useServiceContext();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const { signInWithGoogle, signInWithEmail, setLoading, loading } =
@@ -75,6 +76,10 @@ const Login = () => {
       .finally(() => setLoading(false));
   };
 
+  if (user) {
+    return <Navigate to={from} />;
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -133,6 +138,11 @@ const Login = () => {
           >
             Log In
           </button>
+          {error && (
+            <div className="text-red-600">
+              <label>{error}</label>
+            </div>
+          )}
         </form>
 
         {/* Google Sign-In */}

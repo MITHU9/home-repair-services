@@ -178,7 +178,7 @@ const Navbar = () => {
                       Add Service
                     </Link>
                     <Link
-                      to="/manage-service"
+                      to="/manage-services"
                       className="block hover:text-gray-300"
                     >
                       Manage Service

@@ -26,6 +26,7 @@ export const useServiceContext = () => {
 const ServiceContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [services, setServices] = useState([]);
 
   //Authenticating the user
   const googleProvider = new GoogleAuthProvider();
@@ -68,7 +69,17 @@ const ServiceContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  //get updated service data from the database
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`http://localhost:5000/all-services/${user?.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setServices(data);
+        });
+    }
+  }, [user?.email]);
+
+  //console.log(services);
 
   return (
     <ServiceContext.Provider
@@ -81,6 +92,7 @@ const ServiceContextProvider = ({ children }) => {
         signOutUser,
         updateUser,
         user,
+        services,
       }}
     >
       {children}
