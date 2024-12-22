@@ -91,10 +91,7 @@ const Footer = () => {
       </div>
 
       {/* Footer Bottom */}
-      <div
-        className="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400"
-        data-aos="fade-in"
-      >
+      <div className="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
         © {new Date().getFullYear()} Home Repair Services. All rights reserved.
       </div>
     </footer>

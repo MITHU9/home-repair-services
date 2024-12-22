@@ -71,7 +71,7 @@ const Navbar = () => {
             <span>Home</span>
           </Link>
           <Link
-            to="/services"
+            to="/all-services"
             className="flex items-center space-x-1 hover:text-gray-300"
           >
             <FiUser />
@@ -157,7 +157,7 @@ const Navbar = () => {
             <Link to="/" className="block hover:text-gray-300">
               Home
             </Link>
-            <Link to="/services" className="block hover:text-gray-300">
+            <Link to="/all-services" className="block hover:text-gray-300">
               Services
             </Link>
             {user ? (
