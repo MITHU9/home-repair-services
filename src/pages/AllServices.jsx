@@ -25,7 +25,7 @@ const AllServices = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://source.unsplash.com/1600x600/?service')",
+              "url('https://i.etsystatic.com/34327552/r/il/645a41/4866525152/il_570xN.4866525152_sjze.jpg')",
           }}
         ></div>
         <div className="relative z-10">

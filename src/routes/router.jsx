@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import AddService from "../pages/AddService";
 import AllServices from "../pages/AllServices";
+import ServiceDetails from "../pages/ServiceDetails";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,12 @@ const router = createBrowserRouter([
       {
         path: "/all-services",
         element: <AllServices />,
+      },
+      {
+        path: "/services/:id",
+        element: <ServiceDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/services/${params.id}`),
       },
     ],
   },

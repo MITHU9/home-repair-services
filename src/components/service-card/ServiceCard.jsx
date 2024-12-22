@@ -100,7 +100,7 @@ const ServiceCard = ({ service }) => {
         {/* View Details Button - Positioned at the Bottom Right */}
         <div className="absolute bottom-6 right-6">
           <Link
-            to={"/service-details/:id"}
+            to={`/services/${service._id}`}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700"
           >
             View Details
