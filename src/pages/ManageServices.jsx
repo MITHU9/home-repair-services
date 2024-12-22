@@ -2,27 +2,30 @@ import { useEffect, useState } from "react";
 
 import { useServiceContext } from "../context/Context";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
 const ManageServices = () => {
   const { user } = useServiceContext();
   const [services, setServices] = useState([]);
 
-  //   const handleDelete = (serviceId) => {
-  //     Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "You won't be able to revert this!",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, delete it!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         onDelete(serviceId);
-  //         Swal.fire("Deleted!", "The service has been deleted.", "success");
-  //       }
-  //     });
-  //   };
+  const handleDelete = (serviceId) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this service file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        fetch(`http://localhost:5000/delete-service/${serviceId}`);
+        swal("Poof! Your Service file has been deleted!", {
+          icon: "success",
+        });
+      } else {
+        swal("Your Service file is safe!");
+      }
+    });
+  };
 
   useEffect(() => {
     fetch(`http://localhost:5000/all-services?email=${user?.email}`)
@@ -55,7 +58,7 @@ const ManageServices = () => {
       >
         {services.map((service) => (
           <div
-            key={service.id}
+            key={service._id}
             className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between"
             data-aos="fade-up"
           >
@@ -67,7 +70,10 @@ const ManageServices = () => {
             <h2 className="text-xl font-bold text-gray-800 mb-2">
               {service.serviceName}
             </h2>
-            <p className="text-gray-600 text-sm mb-4">{service.description}</p>
+            <p className="text-gray-600 text-sm mb-2">{service.description}</p>
+            <p className="text-lg font-semibold text-gray-800 mb-2">
+              ServiceCharge: ${service.price}
+            </p>
             <div className="flex justify-between items-center">
               <Link
                 to={`/update-service/${service._id}`}
@@ -75,7 +81,10 @@ const ManageServices = () => {
               >
                 Edit
               </Link>
-              <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+              <button
+                onClick={() => handleDelete(service._id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              >
                 Delete
               </button>
             </div>
