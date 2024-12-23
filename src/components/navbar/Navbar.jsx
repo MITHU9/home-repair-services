@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   FiHome,
   FiLogIn,
@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div className="container mx-auto md:px-4 px-2 py-3 flex justify-between items-center">
         {/* Website Logo and Name */}
         <div className="flex items-center space-x-2">
           <img
@@ -33,7 +33,7 @@ const Navbar = () => {
             alt="Logo"
             className="w-8 h-8 mt-1.5 rounded-full"
           />
-          <span className="text-xl font-bold">Home Repair</span>
+          <span className="text-lg md:text-xl font-bold">Home Repair</span>
         </div>
 
         {/* Hamburger Menu for Small Screens */}
@@ -49,16 +49,11 @@ const Navbar = () => {
             </div>
           )}
           <button
-            className="lg:hidden text-xl focus:outline-none"
+            className="lg:hidden text-xl pl-2
+             focus:outline-none"
             onClick={toggleMenu}
           >
             {isMenuOpen ? <FiX /> : <FiMenu />}
-          </button>
-          <button
-            onClick={toggleTheme}
-            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
-          >
-            {theme === "dark" ? "Light Mode" : "Dark Mode"}
           </button>
         </div>
 
@@ -69,20 +64,28 @@ const Navbar = () => {
           } lg:block`}
         >
           {/* Common Links */}
-          <Link
+          <NavLink
             to="/"
-            className="flex items-center space-x-1 hover:text-gray-300"
+            className={({ isActive }) =>
+              `flex items-center space-x-1 hover:text-gray-300 ${
+                isActive ? "text-yellow-300" : "text-white"
+              }`
+            }
           >
             <FiHome />
             <span>Home</span>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/all-services"
-            className="flex items-center space-x-1 hover:text-gray-300"
+            className={({ isActive }) =>
+              `flex items-center space-x-1 hover:text-gray-300 ${
+                isActive ? "text-yellow-300" : "text-white"
+              }`
+            }
           >
             <FiUser />
             <span>Services</span>
-          </Link>
+          </NavLink>
           {!user && (
             <button
               onClick={toggleTheme}
@@ -105,30 +108,46 @@ const Navbar = () => {
                 </button>
                 {showDropdown && (
                   <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 ">
-                    <Link
+                    <NavLink
                       to="/add-service"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      className={({ isActive }) =>
+                        `block items-center px-3 py-1 hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Add Service
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       to="/manage-services"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      className={({ isActive }) =>
+                        `block items-center px-3 py-1 hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Manage Service
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       to="/booked-services"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      className={({ isActive }) =>
+                        `block items-center px-3 py-1 hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Booked Services
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       to="/service-to-do"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      className={({ isActive }) =>
+                        `block items-center px-3 py-1 hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Service To-Do
-                    </Link>
+                    </NavLink>
                   </div>
                 )}
               </div>
@@ -141,17 +160,22 @@ const Navbar = () => {
                   className="w-8 h-8 rounded-full"
                 />
                 <span>{user?.displayName || "User"}</span>
-                <button
+                <NavLink
                   onClick={handleSignout}
-                  className="flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
+                  className={({ isActive }) =>
+                    `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
+                      isActive && !user ? "text-yellow-300" : "text-white"
+                    }
+                    `
+                  }
                 >
                   <FiLogOut />
                   <span>Logout</span>
-                </button>
+                </NavLink>
               </div>
               <button
                 onClick={toggleTheme}
-                className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+                className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 border border-yellow-700"
               >
                 {theme === "dark" ? "Light Mode" : "Dark Mode"}
               </button>
@@ -160,7 +184,12 @@ const Navbar = () => {
             // Non-Logged-in Menu
             <NavLink
               to="/auth/login"
-              className="flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
+              className={({ isActive }) =>
+                `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
+                  isActive && !user ? "text-yellow-300" : "text-white"
+                }
+                `
+              }
             >
               <FiLogIn />
               <span>Log-in</span>
@@ -173,12 +202,26 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="lg:hidden flex items-center justify-center bg-gray-800 text-white">
           <div className="space-y-4 px-4 py-2">
-            <Link to="/" className="block hover:text-gray-300">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                ` block hover:text-gray-300 ${
+                  isActive ? "text-yellow-300" : "text-white"
+                }`
+              }
+            >
               Home
-            </Link>
-            <Link to="/all-services" className="block hover:text-gray-300">
+            </NavLink>
+            <NavLink
+              to="/all-services"
+              className={({ isActive }) =>
+                ` block hover:text-gray-300 ${
+                  isActive ? "text-yellow-300" : "text-white"
+                }`
+              }
+            >
               Services
-            </Link>
+            </NavLink>
             {user ? (
               <>
                 <button
@@ -190,50 +233,82 @@ const Navbar = () => {
                 </button>
                 {showDropdown && (
                   <div className="ml-4 space-y-2">
-                    <Link
+                    <NavLink
                       to="/add-service"
-                      className="block hover:text-gray-300"
+                      className={({ isActive }) =>
+                        ` block hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Add Service
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       to="/manage-services"
-                      className="block hover:text-gray-300"
+                      className={({ isActive }) =>
+                        ` block hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Manage Service
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       to="/booked-services"
-                      className="block hover:text-gray-300"
+                      className={({ isActive }) =>
+                        ` block hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Booked Services
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       to="/service-to-do"
-                      className="block hover:text-gray-300"
+                      className={({ isActive }) =>
+                        ` block hover:text-gray-300 ${
+                          isActive ? "text-yellow-300" : "text-white"
+                        }`
+                      }
                     >
                       Service To-Do
-                    </Link>
+                    </NavLink>
                   </div>
                 )}
                 <div className="flex items-center space-x-2 mt-4">
-                  <button
+                  <NavLink
                     onClick={handleSignout}
-                    className="flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
+                    className={({ isActive }) =>
+                      `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
+                        isActive && !user ? "text-yellow-300" : "text-white"
+                      }
+                      `
+                    }
                   >
                     <FiLogOut />
                     <span>Logout</span>
-                  </button>
+                  </NavLink>
                 </div>
               </>
             ) : (
               <NavLink
                 to="/auth/login"
-                className="block hover:text-gray-300 border py-1 border-gray-500 px-2 rounded"
+                className={({ isActive }) =>
+                  `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
+                    isActive && !user ? "text-yellow-300" : "text-white"
+                  }
+                  `
+                }
               >
                 Log-in
               </NavLink>
             )}
+            <button
+              onClick={toggleTheme}
+              className="bg-gray-800 text-white px-2 md:px-4 py-2 rounded hover:bg-gray-700 border border-yellow-700"
+            >
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </button>
           </div>
         </div>
       )}

@@ -2,16 +2,18 @@ import { useState, useEffect } from "react";
 import ServiceCard from "../components/service-card/ServiceCard";
 import { Helmet } from "react-helmet-async";
 import { FaSearch } from "react-icons/fa";
-import { useLoaderData } from "react-router-dom";
 import { useServiceContext } from "../context/Context";
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 
 const AllServices = () => {
-  const loaderData = useLoaderData();
-  const [services, setServices] = useState(loaderData);
+  const { count } = useLoaderData();
+  const [services, setServices] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const { theme } = useServiceContext();
-  const [count, setCount] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Function to fetch services based on query
   const fetchServices = async (searchQuery) => {
@@ -29,38 +31,57 @@ const AllServices = () => {
     }
   };
 
+  // all services fetch from backend
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (query) {
-        fetchServices(query);
-      } else {
-        setServices(loaderData);
-      }
-    }, 500);
+    setLoading(true);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [query]);
+    axios
+      .get(
+        `http://localhost:5000/all-services?page=${currentPage}&limit=${itemsPerPage}`
+      )
+      .then((res) => {
+        setServices(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching services:", error);
+        setLoading(false);
+      });
+  }, [currentPage, itemsPerPage]);
 
   useEffect(() => {
-    try {
-      fetch(`http://localhost:5000/service-count`)
-        .then((res) => res.json())
-        .then((data) => {
-          setCount(data);
-        });
-    } catch (error) {
-      console.error("Error fetching services:", error);
+    if (query.length > 0) {
+      fetchServices(query);
+    } else {
+      setServices(services);
     }
-  }, [services]);
+  }, [query.length]);
 
-  const itemsPerPage = 2;
-  const totalPages = Math.ceil(count.count / itemsPerPage);
+  //change items per page
+  const handleChange = (e) => {
+    const value = parseInt(e.target.value);
+    setItemsPerPage(value);
+    setCurrentPage(1);
+  };
 
+  const totalPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(totalPages).keys()].map((num) => num + 1);
 
-  console.log(pages);
+  const handleNext = () => {
+    if (currentPage === totalPages) return;
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentPage === 1) return;
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  //console.log(pages);
 
   //console.log(count.count);
+
+  console.log(services);
 
   return (
     <div>
@@ -124,7 +145,7 @@ const AllServices = () => {
           </div>
         ) : (
           <>
-            {services.length > 0 ? (
+            {services?.length > 0 ? (
               <div className="grid grid-cols-1 gap-6">
                 {services.map((service) => (
                   <ServiceCard key={service._id} service={service} />
@@ -144,7 +165,10 @@ const AllServices = () => {
       {/* Pagination */}
       <div className="container mx-auto pb-12 flex items-center justify-center space-x-4">
         {/* Previous Button */}
-        <button className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2">
+        <button
+          onClick={handlePrevious}
+          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
+        >
           <span>&larr;</span>
           <span>Previous</span>
         </button>
@@ -153,7 +177,14 @@ const AllServices = () => {
         {pages.map((page) => (
           <button
             key={page}
-            className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow-md hover:bg-blue-700 transition-all duration-200"
+            onClick={() => setCurrentPage(page)}
+            className={`
+            ${
+              currentPage === page
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+            }
+              px-4 py-2 rounded-lg font-semibold  shadow-md`}
           >
             {page}
           </button>
@@ -161,7 +192,10 @@ const AllServices = () => {
 
         {/* Next Button and Dropdown */}
         <div className="relative flex items-center space-x-2">
-          <button className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2">
+          <button
+            onClick={handleNext}
+            className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
+          >
             <span>Next</span>
             <span>&rarr;</span>
           </button>
@@ -169,11 +203,14 @@ const AllServices = () => {
           {/* Dropdown */}
 
           {/* Dropdown Menu */}
-          <select className="w-14 py-1.5 rounded-md border border-gray-300 text-gray-200 dark:text-gray-300 shadow-md focus:outline-none dark:bg-gray-700 dark:border-gray-700">
-            <option value="1">5</option>
-            <option value="2">4</option>
-            <option value="3">3</option>
-            <option value="4">8</option>
+          <select
+            onChange={handleChange}
+            className="w-14 py-1.5 rounded-md border border-gray-300 text-gray-200 dark:text-gray-300 shadow-md focus:outline-none dark:bg-gray-700 dark:border-gray-700"
+          >
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
           </select>
         </div>
       </div>
