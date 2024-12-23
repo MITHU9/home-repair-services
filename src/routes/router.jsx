@@ -11,6 +11,8 @@ import ManageServices from "../pages/ManageServices";
 import UpdateService from "../pages/UpdateService";
 import BookedServices from "../pages/BookedServices";
 import PrivateRoute from "./PrivateRoute";
+import NotFound from "../pages/NotFound";
+import ServiceToDo from "../pages/ServiceToDo";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/service-to-do",
+        element: (
+          <PrivateRoute>
+            <ServiceToDo />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -79,6 +89,10 @@ const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

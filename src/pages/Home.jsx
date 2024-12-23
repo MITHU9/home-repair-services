@@ -4,6 +4,9 @@ import AOS from "aos";
 import ServiceCard from "../components/service-card/ServiceCard";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import FeaturedSection from "../components/featured/Featured";
+import Subscription from "../components/Subscription";
+import Testimonials from "../components/testimonial/Testimonial";
 
 const Home = () => {
   const [popularServices, setPopularServices, theme] = useState([]);
@@ -59,8 +62,12 @@ const Home = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-          {popularServices.map((service) => (
-            <div key={service._id}>
+          {popularServices.map((service, index) => (
+            <div
+              key={service._id}
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
               <ServiceCard service={service} />
             </div>
           ))}
@@ -74,6 +81,16 @@ const Home = () => {
             Show All Services
           </Link>
         </div>
+      </section>
+
+      <section>
+        <FeaturedSection />
+      </section>
+      <section>
+        <Subscription />
+      </section>
+      <section>
+        <Testimonials />
       </section>
     </div>
   );
