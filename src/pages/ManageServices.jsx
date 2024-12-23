@@ -5,11 +5,13 @@ import swal from "sweetalert";
 import { useEffect, useState } from "react";
 
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import axios from "axios";
 
 const ManageServices = () => {
   const { user, loading } = useServiceContext();
   const [services, setServices] = useState([]);
   const axiosSecure = useAxiosSecure();
+  const [flag, setFlag] = useState(false);
 
   const handleDelete = (serviceId) => {
     swal({
@@ -20,10 +22,16 @@ const ManageServices = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        fetch(`http://localhost:5000/delete-service/${serviceId}`);
-        swal("Poof! Your Service file has been deleted!", {
-          icon: "success",
-        });
+        axios
+          .delete(`http://localhost:5000/delete-service/${serviceId}`)
+          .then((res) => {
+            if (res) {
+              swal("Poof! Your Service file has been deleted!", {
+                icon: "success",
+              });
+            }
+            setFlag(!flag);
+          });
       } else {
         swal("Your Service file is safe!");
       }
@@ -32,19 +40,11 @@ const ManageServices = () => {
 
   useEffect(() => {
     if (user?.email) {
-      // axios
-      //   .get(`http://localhost:5000/my-services?email=${user?.email}`, {
-      //     withCredentials: true,
-      //   })
-      //   .then((res) => {
-      //     setServices(res.data);
-      //   });
-
       axiosSecure.get(`/my-services?email=${user?.email}`).then((res) => {
         setServices(res.data);
       });
     }
-  }, [user?.email]);
+  }, [user?.email, flag]);
 
   if (loading) {
     return (
@@ -94,7 +94,7 @@ const ManageServices = () => {
                 {service.serviceName}
               </h2>
               <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-                {service.description}
+                {service.description.slice(0, 100) + "..."}
               </p>
               <p className="text-lg font-semibold text-gray-800 mb-2 dark:text-gray-200">
                 ServiceCharge: ${service.price}

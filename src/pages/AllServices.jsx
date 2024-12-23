@@ -11,6 +11,7 @@ const AllServices = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const { theme } = useServiceContext();
+  const [count, setCount] = useState(0);
 
   // Function to fetch services based on query
   const fetchServices = async (searchQuery) => {
@@ -39,6 +40,27 @@ const AllServices = () => {
 
     return () => clearTimeout(delayDebounceFn);
   }, [query]);
+
+  useEffect(() => {
+    try {
+      fetch(`http://localhost:5000/service-count`)
+        .then((res) => res.json())
+        .then((data) => {
+          setCount(data);
+        });
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  }, [services]);
+
+  const itemsPerPage = 2;
+  const totalPages = Math.ceil(count.count / itemsPerPage);
+
+  const pages = [...Array(totalPages).keys()].map((num) => num + 1);
+
+  console.log(pages);
+
+  //console.log(count.count);
 
   return (
     <div>
@@ -117,6 +139,43 @@ const AllServices = () => {
             )}
           </>
         )}
+      </div>
+
+      {/* Pagination */}
+      <div className="container mx-auto pb-12 flex items-center justify-center space-x-4">
+        {/* Previous Button */}
+        <button className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2">
+          <span>&larr;</span>
+          <span>Previous</span>
+        </button>
+
+        {/* Page Numbers */}
+        {pages.map((page) => (
+          <button
+            key={page}
+            className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow-md hover:bg-blue-700 transition-all duration-200"
+          >
+            {page}
+          </button>
+        ))}
+
+        {/* Next Button and Dropdown */}
+        <div className="relative flex items-center space-x-2">
+          <button className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2">
+            <span>Next</span>
+            <span>&rarr;</span>
+          </button>
+
+          {/* Dropdown */}
+
+          {/* Dropdown Menu */}
+          <select className="w-14 py-1.5 rounded-md border border-gray-300 text-gray-200 dark:text-gray-300 shadow-md focus:outline-none dark:bg-gray-700 dark:border-gray-700">
+            <option value="1">5</option>
+            <option value="2">4</option>
+            <option value="3">3</option>
+            <option value="4">8</option>
+          </select>
+        </div>
       </div>
     </div>
   );

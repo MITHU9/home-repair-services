@@ -31,8 +31,7 @@ const ServiceCard = ({ service }) => {
 
           {/* Service Description */}
           <p className="text-gray-600 dark:text-gray-300  text-sm mt-2">
-            {service.description.slice(0, 100)}
-            {service.description.length > 100 ? "..." : ""}
+            {service.description.slice(0, 100) + "..."}
           </p>
 
           {/* Service Price */}

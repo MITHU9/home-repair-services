@@ -56,7 +56,7 @@ const ServiceContextProvider = ({ children }) => {
   };
 
   //theme change
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
   useEffect(() => {
     AOS.refreshHard();
