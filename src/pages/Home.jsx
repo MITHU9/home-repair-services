@@ -15,7 +15,7 @@ const Home = () => {
     AOS.init({ duration: 1000 }); // Initialize AOS with animation duration
 
     try {
-      fetch("http://localhost:5000/popular-services")
+      fetch("https://backend-phi-taupe.vercel.app/popular-services")
         .then((res) => res.json())
         .then((data) => {
           setPopularServices(data);

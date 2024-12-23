@@ -22,14 +22,17 @@ const UpdateService = () => {
 
     try {
       axios
-        .put(`http://localhost:5000/update-service/${service._id}`, {
-          ...service,
-          imageUrl,
-          serviceName,
-          price,
-          serviceArea,
-          description,
-        })
+        .put(
+          `https://backend-phi-taupe.vercel.app/update-service/${service._id}`,
+          {
+            ...service,
+            imageUrl,
+            serviceName,
+            price,
+            serviceArea,
+            description,
+          }
+        )
         .then((res) => {
           if (res.data.modifiedCount === 1) {
             swal({
@@ -48,7 +51,7 @@ const UpdateService = () => {
   };
   useEffect(() => {
     try {
-      fetch(`http://localhost:5000/services/${id}`)
+      fetch(`https://backend-phi-taupe.vercel.app/services/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setService(data);

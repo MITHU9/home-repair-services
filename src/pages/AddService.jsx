@@ -27,7 +27,7 @@ const AddService = () => {
 
     try {
       axios
-        .post("http://localhost:5000/add-service", {
+        .post("https://backend-phi-taupe.vercel.app/add-service", {
           imageUrl,
           serviceName,
           price,

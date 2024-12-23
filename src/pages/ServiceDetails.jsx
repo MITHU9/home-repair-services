@@ -31,7 +31,7 @@ const ServiceDetails = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/book-service", formData)
+      .post("https://backend-phi-taupe.vercel.app/book-service", formData)
       .then((res) => {
         swal("Good job!", "You have booked one service!", "success");
         setShowModal(false);

@@ -20,7 +20,7 @@ const AllServices = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/search-services/${searchQuery}`
+        `https://backend-phi-taupe.vercel.app/search-services/${searchQuery}`
       );
       const data = await response.json();
       setServices(data);
@@ -37,7 +37,7 @@ const AllServices = () => {
 
     axios
       .get(
-        `http://localhost:5000/all-services?page=${currentPage}&limit=${itemsPerPage}`
+        `https://backend-phi-taupe.vercel.app/all-services?page=${currentPage}&limit=${itemsPerPage}`
       )
       .then((res) => {
         setServices(res.data);

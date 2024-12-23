@@ -23,7 +23,9 @@ const ManageServices = () => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .delete(`http://localhost:5000/delete-service/${serviceId}`)
+          .delete(
+            `https://backend-phi-taupe.vercel.app/delete-service/${serviceId}`
+          )
           .then((res) => {
             if (res) {
               swal("Poof! Your Service file has been deleted!", {

@@ -34,7 +34,8 @@ const router = createBrowserRouter([
       {
         path: "/all-services",
         element: <AllServices />,
-        loader: () => fetch("http://localhost:5000/service-count"),
+        loader: () =>
+          fetch("https://backend-phi-taupe.vercel.app/service-count"),
       },
       {
         path: "/services/:id",
@@ -44,7 +45,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/services/${params.id}`),
+          fetch(`https://backend-phi-taupe.vercel.app/services/${params.id}`),
       },
       {
         path: "/update-service/:id",
