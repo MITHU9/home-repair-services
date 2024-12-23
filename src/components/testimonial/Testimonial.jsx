@@ -45,9 +45,12 @@ const Testimonials = () => {
   return (
     <div className="bg-gray-100 py-10 dark:bg-gray-900 mb-20">
       <hr />
-      <h2 className="text-4xl font-bold text-center mb-8 mt-8">
+      <h2 className="text-4xl font-bold text-center mb-4 mt-8">
         Customer Testimonials
       </h2>
+      <p className="text-center text-lg text-gray-600 dark:text-gray-300 mb-8">
+        Our customers love how our home repair service makes life easier!
+      </p>
       <div className="relative w-full max-w-4xl mx-auto overflow-hidden">
         <div
           className="flex transition-transform duration-500"

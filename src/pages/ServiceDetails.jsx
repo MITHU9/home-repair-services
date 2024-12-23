@@ -68,7 +68,7 @@ const ServiceDetails = () => {
       </Helmet>
       {/* Service Details Section */}
       <div
-        className="container mx-auto px-4 py-12 border shadow-md m-3 rounded-md border-gray-400"
+        className="container mx-auto px-4 py-12 border shadow-md m-3 rounded-md border-gray-400 mb-20"
         data-aos="fade-up"
       >
         {service ? (

@@ -28,11 +28,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Website Logo and Name */}
         <div className="flex items-center space-x-2">
-          {/* <img
-            src="/logo.png" // Replace with your logo
+          <img
+            src="/logo2.jpg" // Replace with your logo
             alt="Logo"
-            className="w-8 h-8"
-          /> */}
+            className="w-8 h-8 mt-1.5 rounded-full"
+          />
           <span className="text-xl font-bold">Home Repair</span>
         </div>
 
@@ -169,7 +169,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Overlay Menu for Mobile (Optional for Better UX) */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden flex items-center justify-center bg-gray-800 text-white">
           <div className="space-y-4 px-4 py-2">

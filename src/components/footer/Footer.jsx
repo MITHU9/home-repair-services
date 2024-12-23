@@ -14,9 +14,9 @@ const Footer = () => {
         {/* Logo and Name */}
         <div className="flex flex-col items-start" data-aos="fade-down">
           <img
-            src="/logo.png" // Replace with your actual logo path
-            alt="Home Repair Services Logo"
-            className="h-12 mb-4"
+            src="/logo2.jpg" // Replace with your logo
+            alt="Logo"
+            className="w-8 h-8 rounded-full"
           />
           <h2 className="text-xl font-bold">Home Repair Services</h2>
           <p className="text-sm mt-2">

@@ -1,49 +1,6 @@
 import { Link } from "react-router-dom";
 import { useServiceContext } from "../../context/Context";
 
-const services = [
-  {
-    image: "https://source.unsplash.com/200x200/?home,repair",
-    name: "Plumbing Repair",
-    description:
-      "Get fast plumbing solutions to fix leaks and pipes in your home. Don't wait, call us today!",
-    providerImage: "https://source.unsplash.com/50x50/?person",
-    providerName: "John Doe",
-    price: "$100",
-    detailsLink: "/service-detail/1",
-  },
-  {
-    image: "https://source.unsplash.com/200x200/?construction,tools",
-    name: "Electrical Installation",
-    description:
-      "Safe and secure electrical installations for your home and office. Call for a consultation.",
-    providerImage: "https://source.unsplash.com/50x50/?person",
-    providerName: "Jane Smith",
-    price: "$150",
-    detailsLink: "/service-detail/2",
-  },
-  {
-    image: "https://source.unsplash.com/200x200/?cleaning,service",
-    name: "Home Cleaning",
-    description:
-      "Thorough and professional home cleaning services to make your home sparkling clean.",
-    providerImage: "https://source.unsplash.com/50x50/?person",
-    providerName: "Alice Johnson",
-    price: "$80",
-    detailsLink: "/service-detail/3",
-  },
-  {
-    image: "https://source.unsplash.com/200x200/?plumbing,repair",
-    name: "Roof Repair",
-    description:
-      "Get your roof repaired quickly and efficiently to prevent leaks and water damage.",
-    providerImage: "https://source.unsplash.com/50x50/?person",
-    providerName: "Mark Evans",
-    price: "$120",
-    detailsLink: "/service-detail/4",
-  },
-];
-
 const ServiceCard = ({ service }) => {
   const { theme } = useServiceContext();
 

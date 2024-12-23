@@ -25,11 +25,33 @@ const BookedServices = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 mb-12">
+    <div className="mb-12 py-4">
       <Helmet>
         <title>BookedServices || Home Repair</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-center mb-8">
+      <div className="relative w-full h-72 bg-gradient-to-r from-blue-900 via-purple-800 to-indigo-900 rounded-xl shadow-2xl flex items-center justify-center overflow-hidden">
+        {/* Rotating Decorative Elements */}
+        <div className="absolute w-96 h-96 bg-gradient-to-br from-yellow-400 via-red-500 to-pink-500 opacity-20 rounded-full animate-spin-slow"></div>
+        <div className="absolute w-72 h-72 bg-gradient-to-br from-purple-300 via-indigo-400 to-blue-500 opacity-20 rounded-full animate-spin-reverse-slow"></div>
+
+        {/* Main Text */}
+        <h1 className="relative text-4xl md:text-6xl font-extrabold text-center text-white tracking-wider leading-tight">
+          <span className="block text-yellow-300">Your Trusted Hub</span>
+          <span className="block text-indigo-300 mt-2">
+            For Booked Services
+          </span>
+        </h1>
+
+        {/* Subtext */}
+        <p className="relative text-lg md:text-xl font-medium text-center text-gray-200 mt-4">
+          Connecting you to seamless solutions and reliable service providers.
+        </p>
+
+        {/* Glow Effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-50"></div>
+      </div>
+
+      <h2 className="text-3xl py-12 font-bold text-center mb-8">
         Your Booked Services
       </h2>
 
@@ -44,12 +66,13 @@ const BookedServices = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {bookedServices.map((service, index) => (
             <div
               key={index}
               className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105 dark:bg-gray-800"
               data-aos="fade-up"
+              data-aos-delay={index * 100}
             >
               <img
                 src={service.serviceImage}
