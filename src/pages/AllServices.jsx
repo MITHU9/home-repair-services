@@ -163,11 +163,11 @@ const AllServices = () => {
       </div>
 
       {/* Pagination */}
-      <div className="container mx-auto pb-12 flex items-center justify-center space-x-4">
+      <div className="container mx-auto pb-12 flex items-center justify-center flex-wrap gap-3 space-x-4">
         {/* Previous Button */}
         <button
           onClick={handlePrevious}
-          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
+          className="px-2 md:px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
         >
           <span>&larr;</span>
           <span>Previous</span>
