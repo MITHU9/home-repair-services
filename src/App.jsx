@@ -16,7 +16,7 @@ function App() {
     >
       <Navbar />
 
-      <main>
+      <main className="mt-16">
         <Outlet />
       </main>
 

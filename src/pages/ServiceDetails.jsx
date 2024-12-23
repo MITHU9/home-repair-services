@@ -6,6 +6,7 @@ import { useServiceContext } from "../context/Context";
 import { useLoaderData } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import BookingForm from "../components/form/BookingForm";
+import swal from "sweetalert";
 
 const ServiceDetails = () => {
   const { user } = useServiceContext();
@@ -30,9 +31,9 @@ const ServiceDetails = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/book-service", formData) // Endpoint to store the booking info
+      .post("http://localhost:5000/book-service", formData)
       .then((res) => {
-        alert("Service booked successfully!");
+        swal("Good job!", "You have booked one service!", "success");
         setShowModal(false);
         console.log(res.data);
       })
@@ -138,7 +139,9 @@ const ServiceDetails = () => {
             </div>
           </>
         ) : (
-          <p>Loading...</p>
+          <div className="flex items-center justify-center min-h-screen">
+            <span className="loading loading-bars loading-lg"></span>
+          </div>
         )}
       </div>
 

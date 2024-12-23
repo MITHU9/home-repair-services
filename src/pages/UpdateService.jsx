@@ -59,7 +59,7 @@ const UpdateService = () => {
   }, [flag]);
 
   return (
-    <div className="bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 min-h-screen">
+    <div className="min-h-screen dark:bg-gray-900">
       <Helmet>
         <title>UpdateService || Home Repair</title>
       </Helmet>
@@ -90,10 +90,10 @@ const UpdateService = () => {
       {/* Form Section */}
       <div className="container mx-auto px-4 py-12">
         <div
-          className="bg-white shadow-lg rounded-xl p-8 max-w-lg mx-auto"
+          className="bg-white shadow-lg rounded-xl p-8 max-w-lg mx-auto dark:bg-gray-700"
           data-aos="fade-up"
         >
-          <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">
+          <h2 className="text-2xl font-bold text-center text-gray-700 mb-6 dark:text-gray-200">
             Service Information
           </h2>
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
@@ -101,7 +101,7 @@ const UpdateService = () => {
             <div>
               <label
                 htmlFor="imageUrl"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-gray-200"
               >
                 Image URL
               </label>
@@ -111,7 +111,7 @@ const UpdateService = () => {
                 defaultValue={service?.imageUrl}
                 name="imageUrl"
                 placeholder="Enter Service image URL"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300 dark:bg-gray-600 dark:text-gray-200 dark:border-none"
                 required
               />
             </div>
@@ -120,7 +120,7 @@ const UpdateService = () => {
             <div>
               <label
                 htmlFor="serviceName"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-gray-200"
               >
                 Service Name
               </label>
@@ -130,7 +130,7 @@ const UpdateService = () => {
                 defaultValue={service?.serviceName}
                 name="serviceName"
                 placeholder="Enter service name"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300 dark:bg-gray-600 dark:text-gray-200 dark:border-none"
                 required
               />
             </div>
@@ -139,7 +139,7 @@ const UpdateService = () => {
             <div>
               <label
                 htmlFor="price"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-gray-200"
               >
                 Price
               </label>
@@ -149,7 +149,7 @@ const UpdateService = () => {
                 defaultValue={service?.price}
                 name="price"
                 placeholder="Enter price"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300 dark:bg-gray-600 dark:text-gray-200 dark:border-none"
                 required
               />
             </div>
@@ -158,7 +158,7 @@ const UpdateService = () => {
             <div>
               <label
                 htmlFor="serviceArea"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-gray-200"
               >
                 Service Area
               </label>
@@ -168,7 +168,7 @@ const UpdateService = () => {
                 defaultValue={service?.serviceArea}
                 name="serviceArea"
                 placeholder="Enter service area"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300 dark:bg-gray-600 dark:text-gray-200 dark:border-none"
                 required
               />
             </div>
@@ -177,7 +177,7 @@ const UpdateService = () => {
             <div>
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-600"
+                className="block text-sm font-medium text-gray-600 dark:text-gray-200"
               >
                 Description
               </label>
@@ -187,7 +187,7 @@ const UpdateService = () => {
                 defaultValue={service?.description}
                 placeholder="Enter description"
                 rows="4"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:outline-none focus:ring focus:ring-blue-300 dark:bg-gray-600 dark:text-gray-200 dark:border-none"
                 required
               ></textarea>
             </div>

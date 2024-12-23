@@ -155,7 +155,7 @@ const BookingForm = ({
           <div className="mt-6">
             <button
               type="submit"
-              className="bg-green-600 dark:text-gray-300 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700"
+              className="bg-green-600 dark:text-gray-300 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 w-full"
             >
               Purchase
             </button>

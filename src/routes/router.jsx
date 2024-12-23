@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <UpdateService />,
       },
       {
-        path: "/manage-services/",
+        path: "/manage-services",
         element: (
           <PrivateRoute>
             <ManageServices />

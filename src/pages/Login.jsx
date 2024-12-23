@@ -5,7 +5,6 @@ import { FiMail, FiLock, FiEyeOff, FiEye } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useServiceContext } from "../context/Context";
-import axios from "axios";
 import { Helmet } from "react-helmet-async";
 
 const Login = () => {
@@ -54,15 +53,6 @@ const Login = () => {
     signInWithEmail(email, password)
       .then((res) => {
         if (res.user) {
-          const user = { email: email };
-          axios
-            .post("http://localhost:5000/jwt", user, {
-              withCredentials: true,
-            })
-            .then((res) => {
-              console.log(res.data);
-            });
-
           navigate(from);
           setLoading(false);
           setError(null);

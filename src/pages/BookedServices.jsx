@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useServiceContext } from "../context/Context";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const BookedServices = () => {
   const [bookedServices, setBookedServices] = useState([]);
   const { user, loading } = useServiceContext();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/booked-services/${user?.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setBookedServices(data);
-        });
+      axiosSecure.get(`/booked-services?email=${user?.email}`).then((res) => {
+        setBookedServices(res.data);
+      });
     }
   }, [user?.email]);
 

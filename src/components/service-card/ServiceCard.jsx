@@ -57,7 +57,7 @@ const ServiceCard = ({ service }) => {
         className={`
             ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-300"}
             shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-transform duration-300`}
-        data-aos="fade-up"
+        data-aos="fade-down"
       >
         {/* Service Image */}
         <img

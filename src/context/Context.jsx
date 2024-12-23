@@ -9,6 +9,8 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import AOS from "aos";
+import axios from "axios";
 
 import { auth } from "../firebase/firebase.init";
 
@@ -26,7 +28,6 @@ export const useServiceContext = () => {
 const ServiceContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [services, setServices] = useState([]);
 
   //Authenticating the user
   const googleProvider = new GoogleAuthProvider();
@@ -58,11 +59,16 @@ const ServiceContextProvider = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
+    AOS.refreshHard();
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+    setTimeout(() => {
+      AOS.refresh(); // Re-apply AOS triggers
+    }, 100);
+
     localStorage.setItem("theme", theme);
   }, [theme]);
 
@@ -73,27 +79,36 @@ const ServiceContextProvider = ({ children }) => {
   //get Current User
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        setLoading(false);
+      if (user?.email) {
+        const authUser = { email: user.email };
+        axios
+          .post("http://localhost:5000/jwt", authUser, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log(res.data);
+            setUser(user);
+            setLoading(false);
+          });
       } else {
-        setUser(null);
-        setLoading(false);
+        axios
+          .post(
+            "http://localhost:5000/logout",
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            setUser(null);
+            setLoading(false);
+          });
       }
     });
 
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    if (user?.email) {
-      fetch(`http://localhost:5000/all-services/${user?.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setServices(data);
-        });
-    }
-  }, [user?.email]);
 
   //console.log(services);
 
@@ -108,7 +123,6 @@ const ServiceContextProvider = ({ children }) => {
         signOutUser,
         updateUser,
         user,
-        services,
         toggleTheme,
         theme,
       }}

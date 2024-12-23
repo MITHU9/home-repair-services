@@ -24,7 +24,7 @@ const Navbar = () => {
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
   return (
-    <nav className="bg-gray-800 text-white shadow-lg">
+    <nav className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Website Logo and Name */}
         <div className="flex items-center space-x-2">
@@ -83,6 +83,14 @@ const Navbar = () => {
             <FiUser />
             <span>Services</span>
           </Link>
+          {!user && (
+            <button
+              onClick={toggleTheme}
+              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
+            >
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </button>
+          )}
 
           {user ? (
             <>

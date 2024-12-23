@@ -4,6 +4,7 @@ import AOS from "aos";
 import { useServiceContext } from "../context/Context";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import swal from "sweetalert";
 
 const AddService = () => {
   const { user } = useServiceContext();
@@ -37,8 +38,15 @@ const AddService = () => {
           providerEmail: userEmail,
         })
         .then((res) => {
-          console.log(res.data);
-          formRef.current.reset();
+          if (res) {
+            swal({
+              title: "Success",
+              text: "Service added successfully",
+              icon: "success",
+              button: "Aww yiss!",
+            });
+            formRef.current.reset();
+          }
         });
     } catch (error) {
       console.log(error);

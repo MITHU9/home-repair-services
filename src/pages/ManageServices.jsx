@@ -2,9 +2,14 @@ import { Helmet } from "react-helmet-async";
 import { useServiceContext } from "../context/Context";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { useEffect, useState } from "react";
+
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ManageServices = () => {
-  const { services, loading } = useServiceContext();
+  const { user, loading } = useServiceContext();
+  const [services, setServices] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   const handleDelete = (serviceId) => {
     swal({
@@ -24,6 +29,22 @@ const ManageServices = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (user?.email) {
+      // axios
+      //   .get(`http://localhost:5000/my-services?email=${user?.email}`, {
+      //     withCredentials: true,
+      //   })
+      //   .then((res) => {
+      //     setServices(res.data);
+      //   });
+
+      axiosSecure.get(`/my-services?email=${user?.email}`).then((res) => {
+        setServices(res.data);
+      });
+    }
+  }, [user?.email]);
 
   if (loading) {
     return (
@@ -95,11 +116,11 @@ const ManageServices = () => {
             </div>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center h-[60vh] text-gray-500 text-lg mt-10">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mt-8">
+          <div className="flex flex-col items-center justify-center h-[50vh] w-full text-gray-500 text-lg mt-10 col-span-3">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mt-8 dark:text-gray-200">
               No services found.
             </h2>
-            <p className="text-center font-semibold text-gray-600">
+            <p className="text-center font-semibold text-gray-600 dark:text-gray-300">
               It looks like you haven`t added any services yet.
             </p>
           </div>
