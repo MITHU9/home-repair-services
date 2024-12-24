@@ -1,14 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "aos/dist/aos.css"; // Import AOS styles
 import AOS from "aos";
 import { useServiceContext } from "../context/Context";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import swal from "sweetalert";
+import Loading from "../components/loader/Loading";
 
 const AddService = () => {
-  const { user } = useServiceContext();
-  const formRef = useRef();
+  const { user, loading } = useServiceContext();
+  const formRef = useRef(null);
+  const [loader, setLoader] = useState(false);
   const userPhoto = user?.photoURL;
   const userName = user?.displayName;
   const userEmail = user?.email;
@@ -25,6 +27,8 @@ const AddService = () => {
     const serviceArea = e.target.serviceArea.value;
     const description = e.target.description.value;
 
+    setLoader(true);
+
     try {
       axios
         .post("https://backend-phi-taupe.vercel.app/add-service", {
@@ -39,21 +43,34 @@ const AddService = () => {
         })
         .then((res) => {
           if (res) {
+            console.log(res);
             swal({
               title: "Success",
               text: "Service added successfully",
               icon: "success",
               button: "Aww yiss!",
             });
-            formRef.current.reset();
+            setLoader(false);
+            if (formRef?.current) {
+              formRef.current.reset();
+            }
           }
         });
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   };
 
-  //console.log(userPhoto, userName, userEmail);
+  if (loader || loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
+      </div>
+    );
+  }
+
+  console.log(loader);
 
   return (
     <div className="bg-slate-300 min-h-screen dark:bg-gray-900">

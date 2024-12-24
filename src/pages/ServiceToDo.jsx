@@ -3,13 +3,14 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useServiceContext } from "../context/Context";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Loading from "../components/loader/Loading";
 
 const ServiceToDo = () => {
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loader, setLoader] = useState(true);
   const [flag, setFlag] = useState(false);
   const axiosSecure = useAxiosSecure();
-  const { user } = useServiceContext();
+  const { user, loading } = useServiceContext();
 
   useEffect(() => {
     AOS.init({
@@ -23,20 +24,22 @@ const ServiceToDo = () => {
   }, [flag]);
 
   const fetchBookings = async () => {
+    setLoader(true);
     try {
       await axiosSecure
         .get(`/service-to-do?email=${user?.email}`)
         .then((res) => {
           setBookings(res.data);
-          setLoading(false);
+          setLoader(false);
         });
     } catch (error) {
       console.error("Error fetching bookings: ", error);
-      setLoading(false);
+      setLoader(false);
     }
   };
 
   const updateStatus = (serviceId, newStatus) => {
+    setLoader(true);
     axiosSecure
       .patch(`/update-status/${serviceId}`, {
         updatedStatus: newStatus,
@@ -44,8 +47,21 @@ const ServiceToDo = () => {
       .then((res) => {
         console.log(res.data);
         setFlag(!flag);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.error("Error updating status: ", error);
+        setLoader(false);
       });
   };
+
+  if (loader || loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
+      </div>
+    );
+  }
 
   // console.log(bookings.price);
   // console.log(bookings);

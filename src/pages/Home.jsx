@@ -7,23 +7,39 @@ import { Helmet } from "react-helmet-async";
 import FeaturedSection from "../components/featured/Featured";
 import Subscription from "../components/Subscription";
 import Testimonials from "../components/testimonial/Testimonial";
+import { useServiceContext } from "../context/Context";
+import Loading from "../components/loader/Loading";
 
 const Home = () => {
   const [popularServices, setPopularServices, theme] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const { loading } = useServiceContext();
 
   useEffect(() => {
     AOS.init({ duration: 1000 }); // Initialize AOS with animation duration
+
+    setLoader(true);
 
     try {
       fetch("https://backend-phi-taupe.vercel.app/popular-services")
         .then((res) => res.json())
         .then((data) => {
           setPopularServices(data);
+          setLoader(false);
         });
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   }, [theme]);
+
+  if (loader || loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div>

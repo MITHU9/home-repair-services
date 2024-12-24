@@ -2,24 +2,34 @@ import { useEffect, useState } from "react";
 import { useServiceContext } from "../context/Context";
 import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loading from "../components/loader/Loading";
 
 const BookedServices = () => {
   const [bookedServices, setBookedServices] = useState([]);
   const { user, loading } = useServiceContext();
+  const [loader, setLoader] = useState(false);
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+    setLoader(true);
     if (user?.email) {
-      axiosSecure.get(`/booked-services?email=${user?.email}`).then((res) => {
-        setBookedServices(res.data);
-      });
+      axiosSecure
+        .get(`/booked-services?email=${user?.email}`)
+        .then((res) => {
+          setBookedServices(res.data);
+          setLoader(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching services:", error);
+          setLoader(false);
+        });
     }
   }, [user?.email]);
 
-  if (loading) {
+  if (loader || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-bars loading-lg"></span>
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
       </div>
     );
   }

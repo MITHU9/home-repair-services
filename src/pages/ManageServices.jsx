@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import axios from "axios";
+import Loading from "../components/loader/Loading";
 
 const ManageServices = () => {
   const { user, loading } = useServiceContext();
   const [services, setServices] = useState([]);
   const axiosSecure = useAxiosSecure();
   const [flag, setFlag] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const handleDelete = (serviceId) => {
     swal({
@@ -32,26 +34,36 @@ const ManageServices = () => {
                 icon: "success",
               });
             }
+            setLoader(false);
             setFlag(!flag);
           });
       } else {
         swal("Your Service file is safe!");
+        setLoader(false);
       }
     });
   };
 
   useEffect(() => {
+    setLoader(true);
     if (user?.email) {
-      axiosSecure.get(`/my-services?email=${user?.email}`).then((res) => {
-        setServices(res.data);
-      });
+      axiosSecure
+        .get(`/my-services?email=${user?.email}`)
+        .then((res) => {
+          setServices(res.data);
+          setLoader(false);
+        })
+        .catch((error) => {
+          swal("Error fetching services", error.message, "error");
+          setLoader(false);
+        });
     }
   }, [user?.email, flag]);
 
-  if (loading) {
+  if (loader || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-bars loading-lg"></span>
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
       </div>
     );
   }

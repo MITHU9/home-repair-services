@@ -5,19 +5,20 @@ import { FaSearch } from "react-icons/fa";
 import { useServiceContext } from "../context/Context";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
+import Loading from "../components/loader/Loading";
 
 const AllServices = () => {
   const { count } = useLoaderData();
   const [services, setServices] = useState([]);
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { theme } = useServiceContext();
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [loader, setLoader] = useState(false);
+  const { theme, loading } = useServiceContext();
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
 
   // Function to fetch services based on query
   const fetchServices = async (searchQuery) => {
-    setLoading(true);
+    setLoader(true);
     try {
       const response = await fetch(
         `https://backend-phi-taupe.vercel.app/search-services/${searchQuery}`
@@ -27,13 +28,13 @@ const AllServices = () => {
     } catch (error) {
       console.error("Error fetching services:", error);
     } finally {
-      setLoading(false);
+      setLoader(false);
     }
   };
 
   // all services fetch from backend
   useEffect(() => {
-    setLoading(true);
+    setLoader(true);
 
     axios
       .get(
@@ -41,11 +42,11 @@ const AllServices = () => {
       )
       .then((res) => {
         setServices(res.data);
-        setLoading(false);
+        setLoader(false);
       })
       .catch((error) => {
         console.error("Error fetching services:", error);
-        setLoading(false);
+        setLoader(false);
       });
   }, [currentPage, itemsPerPage]);
 
@@ -77,11 +78,13 @@ const AllServices = () => {
     setCurrentPage((prev) => prev - 1);
   };
 
-  //console.log(pages);
-
-  //console.log(count.count);
-
-  console.log(services);
+  if (loader || loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -139,27 +142,22 @@ const AllServices = () => {
         </h2>
 
         {/* Service Cards - One Column Layout */}
-        {loading ? (
-          <div className="flex items-center justify-center min-h-screen">
-            <span className="loading loading-bars loading-lg"></span>
-          </div>
-        ) : (
-          <>
-            {services?.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6">
-                {services.map((service) => (
-                  <ServiceCard key={service._id} service={service} />
-                ))}
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-[35vh]">
-                <p className="text-center text-gray-600 mt-8 font-semibold dark:text-gray-200">
-                  No services found. Try searching for something else.
-                </p>
-              </div>
-            )}
-          </>
-        )}
+
+        <>
+          {services?.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6">
+              {services.map((service) => (
+                <ServiceCard key={service._id} service={service} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-[35vh]">
+              <p className="text-center text-gray-600 mt-8 font-semibold dark:text-gray-200">
+                No services found. Try searching for something else.
+              </p>
+            </div>
+          )}
+        </>
       </div>
 
       {/* Pagination */}
