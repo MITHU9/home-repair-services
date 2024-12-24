@@ -9,6 +9,7 @@ import Subscription from "../components/Subscription";
 import Testimonials from "../components/testimonial/Testimonial";
 import { useServiceContext } from "../context/Context";
 import Loading from "../components/loader/Loading";
+import Categories from "../components/category/CategoryList";
 
 const Home = () => {
   const [popularServices, setPopularServices, theme] = useState([]);
@@ -97,6 +98,10 @@ const Home = () => {
             Show All Services
           </Link>
         </div>
+      </section>
+
+      <section>
+        <Categories />
       </section>
 
       <section>
