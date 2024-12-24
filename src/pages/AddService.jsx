@@ -70,7 +70,7 @@ const AddService = () => {
     );
   }
 
-  console.log(loader);
+  //console.log(loader);
 
   return (
     <div className="bg-slate-300 min-h-screen dark:bg-gray-900">
@@ -81,7 +81,7 @@ const AddService = () => {
       <header
         className="bg-cover bg-center bg-no-repeat h-64 flex items-center justify-center relative"
         style={{
-          backgroundImage: "url('/public/Home-repair-1.jpg')",
+          backgroundImage: "url('/Home-repair-1.jpg')",
         }}
         data-aos="fade-down"
       >

@@ -100,9 +100,11 @@ const ServiceContextProvider = ({ children }) => {
             }
           )
           .then((res) => {
-            console.log(res.data);
-            setUser(null);
-            setLoading(false);
+            //console.log(res.data);
+            if (res) {
+              setUser(null);
+              setLoading(false);
+            }
           });
       }
     });

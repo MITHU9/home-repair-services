@@ -203,6 +203,7 @@ const AllServices = () => {
           {/* Dropdown Menu */}
           <select
             onChange={handleChange}
+            value={itemsPerPage}
             className="w-14 py-1.5 rounded-md border border-gray-300 text-gray-200 dark:text-gray-300 shadow-md focus:outline-none dark:bg-gray-700 dark:border-gray-700"
           >
             <option value="6">6</option>

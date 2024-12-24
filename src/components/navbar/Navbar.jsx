@@ -10,6 +10,7 @@ import {
   FiX,
 } from "react-icons/fi";
 import { useServiceContext } from "../../context/Context";
+import Button from "../theme/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -173,12 +174,7 @@ const Navbar = () => {
                   <span>Logout</span>
                 </NavLink>
               </div>
-              <button
-                onClick={toggleTheme}
-                className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 border border-yellow-700"
-              >
-                {theme === "dark" ? "Light Mode" : "Dark Mode"}
-              </button>
+              <Button toggleTheme={toggleTheme} theme={theme} />
             </>
           ) : (
             // Non-Logged-in Menu
@@ -303,12 +299,7 @@ const Navbar = () => {
                 Log-in
               </NavLink>
             )}
-            <button
-              onClick={toggleTheme}
-              className="bg-gray-800 text-white px-2 md:px-4 py-2 rounded hover:bg-gray-700 border border-yellow-700"
-            >
-              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-            </button>
+            <Button toggleTheme={toggleTheme} theme={theme} />
           </div>
         </div>
       )}
