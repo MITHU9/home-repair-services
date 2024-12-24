@@ -6,6 +6,7 @@ import { useServiceContext } from "../context/Context";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 import Loading from "../components/loader/Loading";
+import AllCardImage from "../components/card-image/AllCardImage";
 
 const AllServices = () => {
   const { count } = useLoaderData();
@@ -147,7 +148,26 @@ const AllServices = () => {
           {services?.length > 0 ? (
             <div className="grid grid-cols-1 gap-6">
               {services.map((service) => (
-                <ServiceCard key={service._id} service={service} />
+                <div
+                  key={service._id}
+                  className="container mx-auto md:px-4 md:py-8"
+                >
+                  <div
+                    className={`flex flex-col lg:flex-row ${
+                      theme === "dark"
+                        ? "bg-gray-700 text-gray-200"
+                        : "bg-gray-300"
+                    } rounded-lg overflow-hidden `}
+                    data-aos="fade-down"
+                  >
+                    {/* Service Image */}
+                    <AllCardImage
+                      imageUrl={service.imageUrl}
+                      serviceName={service.serviceName}
+                    />
+                    <ServiceCard service={service} />
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
@@ -197,8 +217,6 @@ const AllServices = () => {
             <span>Next</span>
             <span>&rarr;</span>
           </button>
-
-          {/* Dropdown */}
 
           {/* Dropdown Menu */}
           <select

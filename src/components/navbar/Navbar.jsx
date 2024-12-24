@@ -95,7 +95,7 @@ const Navbar = () => {
                   <FiChevronDown />
                 </button>
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 ">
+                  <div className="absolute right-0 mt-2 w-48 text-gray-900 bg-slate-300 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 py-2">
                     <NavLink
                       to="/add-service"
                       className={({ isActive }) =>

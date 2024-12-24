@@ -93,11 +93,12 @@ const ManageServices = () => {
         data-aos="fade-up"
       >
         {services.length > 0 ? (
-          services.map((service) => (
+          services.map((service, index) => (
             <div
               key={service._id}
               className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between dark:bg-gray-700"
               data-aos="fade-up"
+              data-aos-delay={index * 100}
             >
               <img
                 src={service.imageUrl}

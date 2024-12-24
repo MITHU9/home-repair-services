@@ -10,6 +10,7 @@ import Testimonials from "../components/testimonial/Testimonial";
 import { useServiceContext } from "../context/Context";
 import Loading from "../components/loader/Loading";
 import Categories from "../components/category/CategoryList";
+import CardImage from "../components/card-image/HomeCardImage";
 
 const Home = () => {
   const [popularServices, setPopularServices, theme] = useState([]);
@@ -85,7 +86,23 @@ const Home = () => {
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
-              <ServiceCard service={service} />
+              <div className="container mx-auto md:px-4 md:py-8">
+                <div
+                  className={`flex flex-col lg:flex-row ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-gray-200"
+                      : "bg-gray-300"
+                  } shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-transform duration-300`}
+                  data-aos="fade-down"
+                >
+                  {/* Service Image */}
+                  <CardImage
+                    imageUrl={service.imageUrl}
+                    serviceName={service.serviceName}
+                  />
+                  <ServiceCard service={service} />
+                </div>
+              </div>
             </div>
           ))}
         </div>
