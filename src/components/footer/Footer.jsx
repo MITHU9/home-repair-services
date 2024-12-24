@@ -85,7 +85,7 @@ const Footer = () => {
           <p className="text-sm">Email: support@homerepairapp.com</p>
           <p className="text-sm">Phone: +1 (123) 456-7890</p>
           <p className="text-sm mt-4">
-            Address: 123 Home Repair Lane, Suite 456, Your City, Your State
+            Address: 123 Home Repair Lane, Suite 456, Dhaka, Bangladesh
           </p>
         </div>
       </div>
