@@ -7,13 +7,13 @@ const ServiceCard = ({ service }) => {
   console.log(theme);
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto md:px-4 py-12">
       {/* Service Cards */}
 
       <div
         className={`
             ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-300"}
-            shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-transform duration-300`}
+            shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-transform duration-300 `}
         data-aos="fade-down"
       >
         {/* Service Image */}
@@ -48,7 +48,7 @@ const ServiceCard = ({ service }) => {
           </h4>
 
           {/* Provider Image and Name */}
-          <div className="flex items-center">
+          <div className="flex items-center mb-6">
             <img
               src={service.providerImage}
               alt={service.providerName}
@@ -63,7 +63,7 @@ const ServiceCard = ({ service }) => {
         </div>
 
         {/* View Details Button - Positioned at the Bottom Right */}
-        <div className="absolute bottom-6 right-6">
+        <div className="absolute bottom-2 right-6 pb-2">
           <Link
             to={`/services/${service._id}`}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700"
