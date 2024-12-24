@@ -1,16 +1,10 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-  FiHome,
-  FiLogIn,
-  FiUser,
-  FiLogOut,
-  FiChevronDown,
-  FiMenu,
-  FiX,
-} from "react-icons/fi";
+import { FiHome, FiUser, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 import { useServiceContext } from "../../context/Context";
-import Button from "../theme/Button";
+import Button from "../buttons/ThemeButton";
+import LogoutButton from "../buttons/LogoutButton";
+import LoginButton from "../buttons/LoginButton";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +32,7 @@ const Navbar = () => {
         </div>
 
         {/* Hamburger Menu for Small Screens */}
-        <div className="flex items-center space-x-2 lg:hidden">
+        <div className="flex items-center space-x-2 lg:hidden mr-2">
           {user && (
             <div className="flex items-center space-x-2">
               <img
@@ -87,14 +81,7 @@ const Navbar = () => {
             <FiUser />
             <span>Services</span>
           </NavLink>
-          {!user && (
-            <button
-              onClick={toggleTheme}
-              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
-            >
-              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-            </button>
-          )}
+          {!user && <Button toggleTheme={toggleTheme} theme={theme} />}
 
           {user ? (
             <>
@@ -154,42 +141,20 @@ const Navbar = () => {
               </div>
 
               {/* User Profile and Logout */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 ">
                 <img
                   src={user?.photoURL || "/default-avatar.png"}
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full"
                 />
                 <span>{user?.displayName || "User"}</span>
-                <NavLink
-                  onClick={handleSignout}
-                  className={({ isActive }) =>
-                    `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                      isActive && !user ? "text-yellow-300" : "text-white"
-                    }
-                    `
-                  }
-                >
-                  <FiLogOut />
-                  <span>Logout</span>
-                </NavLink>
+                <LogoutButton handleSignout={handleSignout} user={user} />
               </div>
               <Button toggleTheme={toggleTheme} theme={theme} />
             </>
           ) : (
             // Non-Logged-in Menu
-            <NavLink
-              to="/auth/login"
-              className={({ isActive }) =>
-                `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                  isActive && !user ? "text-yellow-300" : "text-white"
-                }
-                `
-              }
-            >
-              <FiLogIn />
-              <span>Log-in</span>
-            </NavLink>
+            <LoginButton user={user} />
           )}
         </div>
       </div>
@@ -272,32 +237,11 @@ const Navbar = () => {
                   </div>
                 )}
                 <div className="flex items-center space-x-2 mt-4">
-                  <NavLink
-                    onClick={handleSignout}
-                    className={({ isActive }) =>
-                      `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                        isActive && !user ? "text-yellow-300" : "text-white"
-                      }
-                      `
-                    }
-                  >
-                    <FiLogOut />
-                    <span>Logout</span>
-                  </NavLink>
+                  <LogoutButton handleSignout={handleSignout} user={user} />
                 </div>
               </>
             ) : (
-              <NavLink
-                to="/auth/login"
-                className={({ isActive }) =>
-                  `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                    isActive && !user ? "text-yellow-300" : "text-white"
-                  }
-                  `
-                }
-              >
-                Log-in
-              </NavLink>
+              <LoginButton user={user} />
             )}
             <Button toggleTheme={toggleTheme} theme={theme} />
           </div>
