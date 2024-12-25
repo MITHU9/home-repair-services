@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FiHome, FiUser, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 import { useServiceContext } from "../../context/Context";
 import Button from "../buttons/ThemeButton";
@@ -22,14 +22,14 @@ const Navbar = () => {
     <nav className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2">
       <div className="container mx-auto md:px-4 px-2 py-3 flex justify-between items-center">
         {/* Website Logo and Name */}
-        <div className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-2">
           <img
             src="/logo2.jpg" // Replace with your logo
             alt="Logo"
             className="w-8 h-8 mt-1.5 rounded-full"
           />
           <span className="text-lg md:text-xl font-bold">Home Repair</span>
-        </div>
+        </Link>
 
         {/* Hamburger Menu for Small Screens */}
         <div className="flex items-center space-x-2 lg:hidden mr-2">

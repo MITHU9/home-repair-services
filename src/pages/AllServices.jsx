@@ -11,6 +11,7 @@ import AllCardImage from "../components/card-image/AllCardImage";
 const AllServices = () => {
   const { count } = useLoaderData();
   const [services, setServices] = useState([]);
+  const [initialServices, setInitialServices] = useState([]);
   const [query, setQuery] = useState("");
   const [loader, setLoader] = useState(false);
   const { theme, loading } = useServiceContext();
@@ -19,7 +20,6 @@ const AllServices = () => {
 
   // Function to fetch services based on query
   const fetchServices = async (searchQuery) => {
-    setLoader(true);
     try {
       const response = await fetch(
         `https://backend-phi-taupe.vercel.app/search-services/${searchQuery}`
@@ -43,6 +43,7 @@ const AllServices = () => {
       )
       .then((res) => {
         setServices(res.data);
+        setInitialServices(res.data);
         setLoader(false);
       })
       .catch((error) => {
@@ -52,12 +53,12 @@ const AllServices = () => {
   }, [currentPage, itemsPerPage]);
 
   useEffect(() => {
-    if (query.length > 0) {
-      fetchServices(query);
-    } else {
-      setServices(services);
+    if (query.length === 0) {
+      setServices(initialServices);
+      return;
     }
-  }, [query.length]);
+    fetchServices(query);
+  }, [query, services]);
 
   //change items per page
   const handleChange = (e) => {
@@ -181,14 +182,14 @@ const AllServices = () => {
       </div>
 
       {/* Pagination */}
-      <div className="container mx-auto pb-12 flex items-center justify-center flex-wrap gap-3 space-x-4">
+      <div className="container mx-auto pb-12 flex items-center justify-center flex-wrap md:gap-3 gap-2">
         {/* Previous Button */}
         <button
           onClick={handlePrevious}
-          className="px-2 md:px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
+          className="px-2 md:px-4 md:py-2 py-1 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
         >
           <span>&larr;</span>
-          <span>Previous</span>
+          <span>Prev</span>
         </button>
 
         {/* Page Numbers */}
@@ -202,7 +203,7 @@ const AllServices = () => {
                 ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-gray-200 text-gray-800 hover:bg-gray-300"
             }
-              px-4 py-2 rounded-lg font-semibold  shadow-md`}
+              md:px-4 md:py-2 px-2 py-1 rounded-lg font-semibold shadow-md`}
           >
             {page}
           </button>
@@ -212,7 +213,7 @@ const AllServices = () => {
         <div className="relative flex items-center space-x-2">
           <button
             onClick={handleNext}
-            className="px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center space-x-2"
+            className="md:px-4 md:py-2 py-1 px-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 shadow-md flex items-center md:space-x-2"
           >
             <span>Next</span>
             <span>&rarr;</span>
@@ -222,7 +223,7 @@ const AllServices = () => {
           <select
             onChange={handleChange}
             value={itemsPerPage}
-            className="w-14 py-1.5 rounded-md border border-gray-300 text-gray-200 dark:text-gray-300 shadow-md focus:outline-none dark:bg-gray-700 dark:border-gray-700"
+            className="w-10 md:w-14 py-1.5 rounded-md border border-gray-300 text-gray-200 dark:text-gray-300 shadow-md focus:outline-none dark:bg-gray-700 dark:border-gray-700"
           >
             <option value="6">6</option>
             <option value="7">7</option>
