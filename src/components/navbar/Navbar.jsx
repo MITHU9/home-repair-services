@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FiHome, FiUser, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 import { useServiceContext } from "../../context/Context";
@@ -11,6 +11,8 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { user, signOutUser, toggleTheme, theme } = useServiceContext();
 
+  const navbarRef = useRef(null);
+
   const handleSignout = () => {
     signOutUser();
   };
@@ -18,13 +20,29 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
+  const handleClickOutside = (event) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <nav className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2">
+    <nav
+      ref={navbarRef}
+      className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2"
+    >
       <div className="container mx-auto md:px-4 px-2 py-3 flex justify-between items-center">
-        {/* Website Logo and Name */}
         <Link to="/" className="flex items-center space-x-2">
           <img
-            src="/logo2.jpg" // Replace with your logo
+            src="/logo2.jpg"
             alt="Logo"
             className="w-8 h-8 mt-1.5 rounded-full"
           />
@@ -143,7 +161,7 @@ const Navbar = () => {
               {/* User Profile and Logout */}
               <div className="flex items-center space-x-2 ">
                 <img
-                  src={user?.photoURL || "/default-avatar.png"}
+                  src={user?.photoURL}
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full"
                 />
@@ -153,7 +171,6 @@ const Navbar = () => {
               <Button toggleTheme={toggleTheme} theme={theme} />
             </>
           ) : (
-            // Non-Logged-in Menu
             <LoginButton user={user} />
           )}
         </div>

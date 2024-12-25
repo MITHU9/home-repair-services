@@ -76,7 +76,7 @@ const BookedServices = () => {
           </p>
         </div>
       ) : (
-        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-2">
           {bookedServices.map((service, index) => (
             <div
               key={index}

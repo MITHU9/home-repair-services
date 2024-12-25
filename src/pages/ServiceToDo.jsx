@@ -98,13 +98,13 @@ const ServiceToDo = () => {
           No booked services available.
         </div>
       ) : (
-        <div className="grid container mx-auto gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid container mx-auto gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-2">
           {bookings.map((booking, index) => (
             <div
               key={index}
               className="bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800 "
               data-aos="fade-up"
-              data-aos-delay={index * 100} // Delay animation based on index
+              data-aos-delay={index * 100}
             >
               <img
                 src={booking.serviceImage}
@@ -130,7 +130,10 @@ const ServiceToDo = () => {
                 Status: {booking.serviceStatus}
               </p>
               <p className="text-gray-600 dark:text-gray-200">
-                Instructions: {booking.specialInstructions}
+                Instructions:{" "}
+                {booking.specialInstructions
+                  ? booking.specialInstructions
+                  : "No instructions provided."}
               </p>
 
               <div className="mt-4">
