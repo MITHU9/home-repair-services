@@ -26,6 +26,8 @@ Live URL:<a href="https://home-repair-service-by-mithu9.netlify.app/">https://ho
 </ul>
 
 <h2>
-category no: 02
-Category Name:Service sharing Web Application.
+Service sharing Web Application.
 </h2>
+<h3>To run this application in local machine all u have to do</h3>
+<h4>for backend: npm run backend</h4>
+<h4>for frontend: npm run dev</h4>
