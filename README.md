@@ -14,6 +14,18 @@ Name: Home Repair Services
 Live URL:<a href="https://home-repair-service-by-mithu9.netlify.app/">https://home-repair-service-by-mithu9.netlify.app/</a>
 </h2>
 
+<h1>Technology used:</h1>
+<ul>
+<li>
+React
+</li>
+<li>JavaScript</li>
+<li>TailwindCSS</li>
+<li>NodeJs</li>
+<li>Express</li>
+<li>MongoDB</li>
+</ul>
+
 <h1>Features</h1>
 <ul>
 <li>User can login and signin with jwt token.</li>
