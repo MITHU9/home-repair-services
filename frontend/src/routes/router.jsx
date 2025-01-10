@@ -34,7 +34,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-services",
-        element: <AllServices />,
+        element: (
+          <PrivateRoute>
+            <AllServices />
+          </PrivateRoute>
+        ),
         loader: () =>
           fetch("https://backend-phi-taupe.vercel.app/service-count"),
       },
