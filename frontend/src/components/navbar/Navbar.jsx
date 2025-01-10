@@ -1,20 +1,18 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import {
-  FiHome,
-  FiLogIn,
-  FiUser,
-  FiLogOut,
-  FiChevronDown,
-  FiMenu,
-  FiX,
-} from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { FiHome, FiUser, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 import { useServiceContext } from "../../context/Context";
+import Button from "../buttons/ThemeButton";
+import LogoutButton from "../buttons/LogoutButton";
+import LoginButton from "../buttons/LoginButton";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { user, signOutUser, toggleTheme, theme } = useServiceContext();
+
+  const navbarRef = useRef(null);
 
   const handleSignout = () => {
     signOutUser();
@@ -23,21 +21,37 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
+  const handleClickOutside = (event) => {
+    if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <nav className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2">
+    <nav
+      ref={navbarRef}
+      className="bg-gray-800 fixed z-50 top-0 right-0 left-0 text-white shadow-lg py-2"
+    >
       <div className="container mx-auto md:px-4 px-2 py-3 flex justify-between items-center">
-        {/* Website Logo and Name */}
-        <div className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-2">
           <img
-            src="/logo2.jpg" // Replace with your logo
+            src="/logo2.jpg"
             alt="Logo"
             className="w-8 h-8 mt-1.5 rounded-full"
           />
           <span className="text-lg md:text-xl font-bold">Home Repair</span>
-        </div>
+        </Link>
 
         {/* Hamburger Menu for Small Screens */}
-        <div className="flex items-center space-x-2 lg:hidden">
+        <div className="flex items-center space-x-2 lg:hidden mr-2">
           {user && (
             <div className="flex items-center space-x-2">
               <img
@@ -75,25 +89,31 @@ const Navbar = () => {
             <FiHome />
             <span>Home</span>
           </NavLink>
+          {user && (
+            <NavLink
+              to="/all-services"
+              className={({ isActive }) =>
+                `flex items-center space-x-1 hover:text-gray-300 ${
+                  isActive ? "text-yellow-300" : "text-white"
+                }`
+              }
+            >
+              <FiUser />
+              <span>Services</span>
+            </NavLink>
+          )}
           <NavLink
-            to="/all-services"
+            to="/about"
             className={({ isActive }) =>
               `flex items-center space-x-1 hover:text-gray-300 ${
                 isActive ? "text-yellow-300" : "text-white"
               }`
             }
           >
-            <FiUser />
-            <span>Services</span>
+            <AiOutlineInfoCircle />
+            <span>About Us</span>
           </NavLink>
-          {!user && (
-            <button
-              onClick={toggleTheme}
-              className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700"
-            >
-              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-            </button>
-          )}
+          {!user && <Button toggleTheme={toggleTheme} theme={theme} />}
 
           {user ? (
             <>
@@ -107,13 +127,20 @@ const Navbar = () => {
                   <FiChevronDown />
                 </button>
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 ">
+                  <div
+                    className="absolute right-0 mt-2 w-48
+                 bg-slate-300 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 py-2"
+                  >
                     <NavLink
                       to="/add-service"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
-                        }`
+                        `block items-center px-3 py-1
+                      hover:text-gray-500 
+                      dark:hover:text-gray-300 ${
+                        isActive
+                          ? "dark:text-yellow-300 bg-yellow-700"
+                          : "text-gray-800 dark:text-gray-200"
+                      }`
                       }
                     >
                       Add Service
@@ -121,9 +148,12 @@ const Navbar = () => {
                     <NavLink
                       to="/manage-services"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
-                        }`
+                        `block items-center px-3 py-1
+                      hover:text-gray-600 dark:hover:text-gray-300 ${
+                        isActive
+                          ? "dark:text-yellow-300 bg-yellow-700"
+                          : "text-gray-800 dark:text-gray-200"
+                      }`
                       }
                     >
                       Manage Service
@@ -131,8 +161,10 @@ const Navbar = () => {
                     <NavLink
                       to="/booked-services"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
+                        `block items-center px-3 py-1 hover:text-gray-600 dark:hover:text-gray-300 ${
+                          isActive
+                            ? "dark:text-yellow-300 bg-yellow-700"
+                            : "text-gray-800 dark:text-gray-200"
                         }`
                       }
                     >
@@ -141,8 +173,10 @@ const Navbar = () => {
                     <NavLink
                       to="/service-to-do"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
+                        `block items-center px-3 py-1 hover:text-gray-600 dark:hover:text-gray-300 ${
+                          isActive
+                            ? "dark:text-yellow-300 bg-yellow-700"
+                            : "text-gray-800 dark:text-gray-200"
                         }`
                       }
                     >
@@ -153,47 +187,19 @@ const Navbar = () => {
               </div>
 
               {/* User Profile and Logout */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 ">
                 <img
-                  src={user?.photoURL || "/default-avatar.png"}
+                  src={user?.photoURL}
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full"
                 />
                 <span>{user?.displayName || "User"}</span>
-                <NavLink
-                  onClick={handleSignout}
-                  className={({ isActive }) =>
-                    `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                      isActive && !user ? "text-yellow-300" : "text-white"
-                    }
-                    `
-                  }
-                >
-                  <FiLogOut />
-                  <span>Logout</span>
-                </NavLink>
+                <LogoutButton handleSignout={handleSignout} user={user} />
               </div>
-              <button
-                onClick={toggleTheme}
-                className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 border border-yellow-700"
-              >
-                {theme === "dark" ? "Light Mode" : "Dark Mode"}
-              </button>
+              <Button toggleTheme={toggleTheme} theme={theme} />
             </>
           ) : (
-            // Non-Logged-in Menu
-            <NavLink
-              to="/auth/login"
-              className={({ isActive }) =>
-                `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                  isActive && !user ? "text-yellow-300" : "text-white"
-                }
-                `
-              }
-            >
-              <FiLogIn />
-              <span>Log-in</span>
-            </NavLink>
+            <LoginButton user={user} />
           )}
         </div>
       </div>
@@ -212,15 +218,28 @@ const Navbar = () => {
             >
               Home
             </NavLink>
+            {user && (
+              <NavLink
+                to="/all-services"
+                className={({ isActive }) =>
+                  ` block hover:text-gray-300 ${
+                    isActive ? "text-yellow-300" : "text-white"
+                  }`
+                }
+              >
+                Services
+              </NavLink>
+            )}
             <NavLink
-              to="/all-services"
+              to="/about"
               className={({ isActive }) =>
-                ` block hover:text-gray-300 ${
+                `flex items-center space-x-1 hover:text-gray-300 ${
                   isActive ? "text-yellow-300" : "text-white"
                 }`
               }
             >
-              Services
+              <AiOutlineInfoCircle />
+              <span>About Us</span>
             </NavLink>
             {user ? (
               <>
@@ -276,39 +295,13 @@ const Navbar = () => {
                   </div>
                 )}
                 <div className="flex items-center space-x-2 mt-4">
-                  <NavLink
-                    onClick={handleSignout}
-                    className={({ isActive }) =>
-                      `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                        isActive && !user ? "text-yellow-300" : "text-white"
-                      }
-                      `
-                    }
-                  >
-                    <FiLogOut />
-                    <span>Logout</span>
-                  </NavLink>
+                  <LogoutButton handleSignout={handleSignout} user={user} />
                 </div>
               </>
             ) : (
-              <NavLink
-                to="/auth/login"
-                className={({ isActive }) =>
-                  `flex items-center space-x-1 hover:text-gray-300 border py-1 border-gray-500 px-2 rounded ${
-                    isActive && !user ? "text-yellow-300" : "text-white"
-                  }
-                  `
-                }
-              >
-                Log-in
-              </NavLink>
+              <LoginButton user={user} />
             )}
-            <button
-              onClick={toggleTheme}
-              className="bg-gray-800 text-white px-2 md:px-4 py-2 rounded hover:bg-gray-700 border border-yellow-700"
-            >
-              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-            </button>
+            <Button toggleTheme={toggleTheme} theme={theme} />
           </div>
         </div>
       )}

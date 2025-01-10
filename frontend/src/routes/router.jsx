@@ -13,6 +13,7 @@ import BookedServices from "../pages/BookedServices";
 import PrivateRoute from "./PrivateRoute";
 import NotFound from "../pages/NotFound";
 import ServiceToDo from "../pages/ServiceToDo";
+import About from "../pages/About";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
             <ServiceToDo />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },

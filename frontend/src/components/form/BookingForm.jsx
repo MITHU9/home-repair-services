@@ -129,6 +129,7 @@ const BookingForm = ({
               <input
                 type="date"
                 name="serviceDate"
+                required
                 value={formData.serviceDate}
                 onChange={handleChange}
                 className="w-full p-3 mt-2 border dark:bg-gray-600 rounded-lg outline-none"

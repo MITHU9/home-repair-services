@@ -1,14 +1,17 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import swal from "sweetalert";
+import Loading from "../components/loader/Loading";
+import { useServiceContext } from "../context/Context";
 
 const UpdateService = () => {
   const [service, setService] = useState();
   const [flag, setFlag] = useState(false);
+  const [loader, setLoader] = useState(false);
   const { id } = useParams();
-  const formRef = useRef();
+  const { loading } = useServiceContext();
 
   //console.log(service);
 
@@ -19,6 +22,8 @@ const UpdateService = () => {
     const price = e.target.price.value;
     const serviceArea = e.target.serviceArea.value;
     const description = e.target.description.value;
+
+    setLoader(true);
 
     try {
       axios
@@ -43,23 +48,35 @@ const UpdateService = () => {
             });
           }
           setFlag(!flag);
-          formRef.current.reset();
+          setLoader(false);
         });
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   };
   useEffect(() => {
+    setLoader(true);
     try {
       fetch(`https://backend-phi-taupe.vercel.app/services/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setService(data);
+          setLoader(false);
         });
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   }, [flag]);
+
+  if (loader || loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen dark:bg-gray-900">
@@ -99,7 +116,7 @@ const UpdateService = () => {
           <h2 className="text-2xl font-bold text-center text-gray-700 mb-6 dark:text-gray-200">
             Service Information
           </h2>
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Image URL */}
             <div>
               <label

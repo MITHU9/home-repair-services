@@ -116,7 +116,7 @@ const ServiceDetails = () => {
             </p>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex items-center mb-6">
                 <img
                   src={service.providerImage}
                   alt={service.providerName}

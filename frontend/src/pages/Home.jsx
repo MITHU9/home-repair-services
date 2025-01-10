@@ -7,23 +7,40 @@ import { Helmet } from "react-helmet-async";
 import FeaturedSection from "../components/featured/Featured";
 import Subscription from "../components/Subscription";
 import Testimonials from "../components/testimonial/Testimonial";
+import { useServiceContext } from "../context/Context";
+import Loading from "../components/loader/Loading";
+import Categories from "../components/category/CategoryList";
 
 const Home = () => {
   const [popularServices, setPopularServices, theme] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const { loading } = useServiceContext();
 
   useEffect(() => {
     AOS.init({ duration: 1000 }); // Initialize AOS with animation duration
+
+    setLoader(true);
 
     try {
       fetch("https://backend-phi-taupe.vercel.app/popular-services")
         .then((res) => res.json())
         .then((data) => {
           setPopularServices(data);
+          setLoader(false);
         });
     } catch (error) {
       console.log(error);
+      setLoader(false);
     }
   }, [theme]);
+
+  if (loader || loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -42,7 +59,7 @@ const Home = () => {
       {/* 
         <!-- Popular Services Section -->
        */}
-      <section className="lg:container mx-auto px-4 py-10">
+      <section className="lg:container mx-auto md:px-4 py-10">
         <div className="text-center py-8">
           <h2
             className={`
@@ -61,17 +78,13 @@ const Home = () => {
             Check out some of our most popular services.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-          {popularServices.map((service, index) => (
-            <div
-              key={service._id}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <ServiceCard service={service} />
-            </div>
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {popularServices.map((service, index) => (
+              <ServiceCard key={service._id} index={index} service={service} />
+            ))}
+          </div>
+        </>
         {/* Show All Button */}
         <div className="text-center mt-8">
           <Link
@@ -81,6 +94,10 @@ const Home = () => {
             Show All Services
           </Link>
         </div>
+      </section>
+
+      <section>
+        <Categories />
       </section>
 
       <section>

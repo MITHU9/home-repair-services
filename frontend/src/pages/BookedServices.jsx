@@ -2,24 +2,34 @@ import { useEffect, useState } from "react";
 import { useServiceContext } from "../context/Context";
 import { Helmet } from "react-helmet-async";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loading from "../components/loader/Loading";
 
 const BookedServices = () => {
   const [bookedServices, setBookedServices] = useState([]);
   const { user, loading } = useServiceContext();
+  const [loader, setLoader] = useState(false);
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+    setLoader(true);
     if (user?.email) {
-      axiosSecure.get(`/booked-services?email=${user?.email}`).then((res) => {
-        setBookedServices(res.data);
-      });
+      axiosSecure
+        .get(`/booked-services?email=${user?.email}`)
+        .then((res) => {
+          setBookedServices(res.data);
+          setLoader(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching services:", error);
+          setLoader(false);
+        });
     }
   }, [user?.email]);
 
-  if (loading) {
+  if (loader || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-bars loading-lg"></span>
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
       </div>
     );
   }
@@ -66,30 +76,38 @@ const BookedServices = () => {
           </p>
         </div>
       ) : (
-        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bookedServices.map((service, index) => (
-            <div
-              key={index}
-              className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105 dark:bg-gray-800"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <img
-                src={service.serviceImage}
-                alt={service.serviceName}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-xl font-semibold">
-                      {service.serviceName}
-                    </h3>
-                    <p className="text-gray-500 font-semibold dark:text-gray-300">
-                      {service.providerName}
-                    </p>
-                  </div>
-                  <div>
+        <div className="overflow-x-auto container mx-auto px-4">
+          {/* Table Design */}
+          <table className="min-w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg table-auto">
+            <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+              <tr>
+                <th className="py-3 px-4 text-left">Service Image</th>
+                <th className="py-3 px-4 text-left">Service Name</th>
+                <th className="py-3 px-4 text-left">Provider Name</th>
+                <th className="py-3 px-4 text-left">Price</th>
+                <th className="py-3 px-4 text-left">Booked Date</th>
+                <th className="py-3 px-4 text-left">Status</th>
+                <th className="py-3 px-4 text-left">Provider Email</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-600 dark:text-gray-300">
+              {bookedServices.map((service) => (
+                <tr
+                  key={service._id}
+                  className="border-b border-gray-200 dark:border-gray-600"
+                >
+                  <td className="py-3 px-4">
+                    <img
+                      src={service.serviceImage}
+                      alt={service.serviceName}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                  </td>
+                  <td className="py-3 px-4">{service.serviceName}</td>
+                  <td className="py-3 px-4">{service.providerName}</td>
+                  <td className="py-3 px-4">${service.price}</td>
+                  <td className="py-3 px-4">{service.serviceDate}</td>
+                  <td className="py-3 px-4">
                     <span
                       className={`px-4 py-2 rounded-full text-white text-xs font-semibold ${
                         service.serviceStatus === "Pending"
@@ -101,33 +119,16 @@ const BookedServices = () => {
                     >
                       {service.serviceStatus}
                     </span>
-                  </div>
-                </div>
-
-                {/* Status Section */}
-                <div className="flex justify-between items-center mt-4">
-                  <span className="text-gray-600 font-semibold dark:text-gray-300">
-                    Price: <strong>${service.price}</strong>
-                  </span>
-                </div>
-
-                {/* Booking Info */}
-                <div className="mt-2 text-gray-700 dark:text-gray-200">
-                  <p>
-                    <strong>Booked Date:</strong> {service.serviceDate}
-                  </p>
-                </div>
-                <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                  <p>
-                    <strong>Provider Email:</strong> {service.providerEmail}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+                  </td>
+                  <td className="py-3 px-4">{service.providerEmail}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
   );
 };
+
 export default BookedServices;

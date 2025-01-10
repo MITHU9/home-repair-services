@@ -96,7 +96,7 @@ async function run() {
     app.get("/all-services", async (req, res) => {
       //console.log(req.query);
       const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 2;
+      const limit = parseInt(req.query.limit) || 6;
       const cursor = serviceCollection
         .find({})
         .skip((page - 1) * limit)

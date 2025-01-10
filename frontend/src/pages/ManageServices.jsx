@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import axios from "axios";
+import Loading from "../components/loader/Loading";
 
 const ManageServices = () => {
   const { user, loading } = useServiceContext();
   const [services, setServices] = useState([]);
   const axiosSecure = useAxiosSecure();
   const [flag, setFlag] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const handleDelete = (serviceId) => {
     swal({
@@ -32,26 +34,36 @@ const ManageServices = () => {
                 icon: "success",
               });
             }
+            setLoader(false);
             setFlag(!flag);
           });
       } else {
         swal("Your Service file is safe!");
+        setLoader(false);
       }
     });
   };
 
   useEffect(() => {
+    setLoader(true);
     if (user?.email) {
-      axiosSecure.get(`/my-services?email=${user?.email}`).then((res) => {
-        setServices(res.data);
-      });
+      axiosSecure
+        .get(`/my-services?email=${user?.email}`)
+        .then((res) => {
+          setServices(res.data);
+          setLoader(false);
+        })
+        .catch((error) => {
+          swal("Error fetching services", error.message, "error");
+          setLoader(false);
+        });
     }
   }, [user?.email, flag]);
 
-  if (loading) {
+  if (loader || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-bars loading-lg"></span>
+      <div className="flex items-center justify-center h-screen bg-gray-800">
+        <Loading />
       </div>
     );
   }
@@ -75,50 +87,64 @@ const ManageServices = () => {
         </div>
       </div>
 
-      {/* Services List */}
-      <div
-        className="container mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        data-aos="fade-up"
-      >
+      {/* Services Table */}
+      <div className="container mx-auto px-4 py-8">
         {services.length > 0 ? (
-          services.map((service) => (
-            <div
-              key={service._id}
-              className="bg-white shadow-md rounded-lg p-4 flex flex-col justify-between dark:bg-gray-700"
-              data-aos="fade-up"
-            >
-              <img
-                src={service.imageUrl}
-                alt={service.serviceName}
-                className="w-full h-40 lg:h-52 object-cover rounded-lg mb-4"
-              />
-              <h2 className="text-xl font-bold text-gray-800 mb-2 dark:text-gray-200">
-                {service.serviceName}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
-                {service.description.slice(0, 100) + "..."}
-              </p>
-              <p className="text-lg font-semibold text-gray-800 mb-2 dark:text-gray-200">
-                ServiceCharge: ${service.price}
-              </p>
-              <div className="flex justify-between items-center">
-                <Link
-                  to={`/update-service/${service._id}`}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(service._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))
+          <div
+            className="overflow-x-auto shadow-md rounded-lg"
+            data-aos="fade-up"
+          >
+            <table className="min-w-full bg-white dark:bg-gray-800 table-auto">
+              <thead className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                <tr>
+                  <th className="py-3 px-4 text-left">Service Image</th>
+                  <th className="py-3 px-4 text-left">Service Name</th>
+                  <th className="py-3 px-4 text-left">Description</th>
+                  <th className="py-3 px-4 text-left">Price</th>
+                  <th className="py-3 px-4 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-600 dark:text-gray-300">
+                {services.map((service) => (
+                  <tr
+                    key={service._id}
+                    className="border-b border-gray-200 dark:border-gray-600"
+                  >
+                    <td className="py-3 px-4">
+                      <img
+                        src={service.imageUrl}
+                        alt={service.serviceName}
+                        className="w-20 h-20 object-cover rounded-md"
+                      />
+                    </td>
+                    <td className="py-3 px-4">{service.serviceName}</td>
+                    <td className="py-3 px-4 text-sm">
+                      {service.description.slice(0, 60)}...
+                    </td>
+                    <td className="py-3 px-4">${service.price}</td>
+                    <td className="py-3 px-4">
+                      <div className="flex space-x-2">
+                        <Link
+                          to={`/update-service/${service._id}`}
+                          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(service._id)}
+                          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-[50vh] w-full text-gray-500 text-lg mt-10 col-span-3">
+          <div className="flex flex-col items-center justify-center h-[50vh] w-full text-gray-500 text-lg mt-10">
             <h2 className="text-3xl font-bold text-center text-gray-800 mt-8 dark:text-gray-200">
               No services found.
             </h2>

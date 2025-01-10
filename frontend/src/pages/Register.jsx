@@ -112,12 +112,13 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20">
       <Helmet>
         <title>Register || Home Repair</title>
       </Helmet>
       <div
-        className="bg-white shadow-xl rounded-lg p-6 sm:p-8 lg:p-10 w-full max-w-sm sm:max-w-md lg:max-w-lg"
+        className="bg-white shadow-xl rounded-lg p-6 sm:p-8 lg:p-10 w-full max-w-sm sm:max-w-md lg:max-w-lg 
+         mt-4"
         data-aos="fade-up"
       >
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-4">
