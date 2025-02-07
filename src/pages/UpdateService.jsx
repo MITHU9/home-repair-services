@@ -28,7 +28,7 @@ const UpdateService = () => {
     try {
       axios
         .put(
-          `https://backend-phi-taupe.vercel.app/update-service/${service._id}`,
+          `https://home-repaire-bakcend.vercel.app/update-service/${service._id}`,
           {
             ...service,
             imageUrl,
@@ -58,7 +58,7 @@ const UpdateService = () => {
   useEffect(() => {
     setLoader(true);
     try {
-      fetch(`https://backend-phi-taupe.vercel.app/services/${id}`)
+      fetch(`https://home-repaire-bakcend.vercel.app/services/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setService(data);

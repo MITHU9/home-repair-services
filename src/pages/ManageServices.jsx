@@ -26,7 +26,7 @@ const ManageServices = () => {
       if (willDelete) {
         axios
           .delete(
-            `https://backend-phi-taupe.vercel.app/delete-service/${serviceId}`
+            `https://home-repaire-bakcend.vercel.app/delete-service/${serviceId}`
           )
           .then((res) => {
             if (res) {

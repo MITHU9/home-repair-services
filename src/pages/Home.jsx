@@ -23,7 +23,7 @@ const Home = () => {
     setLoader(true);
 
     try {
-      fetch("https://backend-phi-taupe.vercel.app/popular-services")
+      fetch("https://home-repaire-bakcend.vercel.app/popular-services")
         .then((res) => res.json())
         .then((data) => {
           setPopularServices(data);

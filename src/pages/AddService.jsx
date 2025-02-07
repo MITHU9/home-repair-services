@@ -31,7 +31,7 @@ const AddService = () => {
 
     try {
       axios
-        .post("https://backend-phi-taupe.vercel.app/add-service", {
+        .post("https://home-repaire-bakcend.vercel.app/add-service", {
           imageUrl,
           serviceName,
           price,

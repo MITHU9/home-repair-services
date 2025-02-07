@@ -82,7 +82,7 @@ const ServiceContextProvider = ({ children }) => {
       if (user?.email) {
         const authUser = { email: user.email };
         axios
-          .post("https://backend-phi-taupe.vercel.app/jwt", authUser, {
+          .post("https://home-repaire-bakcend.vercel.app/jwt", authUser, {
             withCredentials: true,
           })
           .then((res) => {
@@ -93,7 +93,7 @@ const ServiceContextProvider = ({ children }) => {
       } else {
         axios
           .post(
-            "https://backend-phi-taupe.vercel.app/logout",
+            "https://home-repaire-bakcend.vercel.app/logout",
             {},
             {
               withCredentials: true,

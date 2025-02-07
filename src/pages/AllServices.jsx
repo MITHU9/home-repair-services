@@ -22,7 +22,7 @@ const AllServices = () => {
   const fetchServices = async (searchQuery) => {
     try {
       const response = await fetch(
-        `https://backend-phi-taupe.vercel.app/search-services/${searchQuery}`
+        `https://home-repaire-bakcend.vercel.app/search-services/${searchQuery}`
       );
       const data = await response.json();
       setServices(data);
@@ -39,7 +39,7 @@ const AllServices = () => {
 
     axios
       .get(
-        `https://backend-phi-taupe.vercel.app/all-services?page=${currentPage}&limit=${itemsPerPage}`
+        `https://home-repaire-bakcend.vercel.app/all-services?page=${currentPage}&limit=${itemsPerPage}`
       )
       .then((res) => {
         setServices(res.data);

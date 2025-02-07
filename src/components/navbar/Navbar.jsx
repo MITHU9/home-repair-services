@@ -113,13 +113,20 @@ const Navbar = () => {
                   <FiChevronDown />
                 </button>
                 {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 text-gray-900 bg-slate-300 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 py-2">
+                  <div
+                    className="absolute right-0 mt-2 w-48
+                 bg-slate-300 rounded-md shadow-lg z-10 dark:bg-gray-700 dark:text-gray-200 py-2"
+                  >
                     <NavLink
                       to="/add-service"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
-                        }`
+                        `block items-center px-3 py-1
+                      hover:text-gray-500 
+                      dark:hover:text-gray-300 ${
+                        isActive
+                          ? "dark:text-yellow-300 bg-yellow-700"
+                          : "text-gray-800 dark:text-gray-200"
+                      }`
                       }
                     >
                       Add Service
@@ -127,9 +134,12 @@ const Navbar = () => {
                     <NavLink
                       to="/manage-services"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
-                        }`
+                        `block items-center px-3 py-1
+                      hover:text-gray-600 dark:hover:text-gray-300 ${
+                        isActive
+                          ? "dark:text-yellow-300 bg-yellow-700"
+                          : "text-gray-800 dark:text-gray-200"
+                      }`
                       }
                     >
                       Manage Service
@@ -137,8 +147,10 @@ const Navbar = () => {
                     <NavLink
                       to="/booked-services"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
+                        `block items-center px-3 py-1 hover:text-gray-600 dark:hover:text-gray-300 ${
+                          isActive
+                            ? "dark:text-yellow-300 bg-yellow-700"
+                            : "text-gray-800 dark:text-gray-200"
                         }`
                       }
                     >
@@ -147,8 +159,10 @@ const Navbar = () => {
                     <NavLink
                       to="/service-to-do"
                       className={({ isActive }) =>
-                        `block items-center px-3 py-1 hover:text-gray-300 ${
-                          isActive ? "text-yellow-300" : "text-white"
+                        `block items-center px-3 py-1 hover:text-gray-600 dark:hover:text-gray-300 ${
+                          isActive
+                            ? "dark:text-yellow-300 bg-yellow-700"
+                            : "text-gray-800 dark:text-gray-200"
                         }`
                       }
                     >
